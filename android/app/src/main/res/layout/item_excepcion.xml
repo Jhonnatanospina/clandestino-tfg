@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Un día de vacaciones o un día extra en D3, con el botón para borrarlo. -->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <!-- Raya de separación; la primera fila la esconde. -->
+    <View
+        android:id="@+id/separador"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/filete" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingVertical="8dp">
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/fecha"
+                style="@style/Texto.Destacado"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="16sp"
+                tools:text="Martes 9 de febrero" />
+
+            <TextView
+                android:id="@+id/detalle"
+                style="@style/Texto.Nota"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                tools:text="Vacaciones" />
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/chip_estado"
+            style="@style/Texto.Chip"
+            tools:text="Cerrado" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/boton_borrar"
+            style="@style/Widget.Material3.Button.IconButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:contentDescription="@string/borrar"
+            app:icon="@drawable/ic_cerrar"
+            app:iconTint="@color/secundario" />
+    </LinearLayout>
+</LinearLayout>

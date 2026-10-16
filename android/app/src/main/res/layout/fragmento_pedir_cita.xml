@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- C2 · Pedir cita: el calendario de los próximos 14 días, las horas del día elegido y el
+     botón de pedir. Se puede deslizar hacia abajo para volver a cargar el calendario. -->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <include layout="@layout/cabecera" />
+
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+        android:id="@+id/deslizar"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1">
+
+        <androidx.core.widget.NestedScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:paddingHorizontal="@dimen/margen_pantalla"
+                android:paddingBottom="20dp">
+
+                <TextView
+                    android:id="@+id/mes"
+                    style="@style/Texto.Destacado"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:gravity="center"
+                    android:letterSpacing="0.08"
+                    android:textStyle="bold"
+                    tools:text="FEBRERO 2027" />
+
+                <!-- Las letras L M X J V S D las pone el código, una por columna. -->
+                <LinearLayout
+                    android:id="@+id/letras"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:orientation="horizontal" />
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/calendario"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
+                    android:nestedScrollingEnabled="false" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="12dp"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        style="@style/Texto.Leyenda"
+                        app:drawableStartCompat="@drawable/leyenda_libre"
+                        android:text="@string/leyenda_libre" />
+
+                    <TextView
+                        style="@style/Texto.Leyenda"
+                        app:drawableStartCompat="@drawable/leyenda_completo"
+                        android:text="@string/leyenda_completo" />
+
+                    <TextView
+                        style="@style/Texto.Leyenda"
+                        app:drawableStartCompat="@drawable/leyenda_vacaciones"
+                        android:text="@string/leyenda_vacaciones" />
+
+                    <TextView
+                        style="@style/Texto.Leyenda"
+                        app:drawableStartCompat="@drawable/leyenda_hoy"
+                        android:text="@string/leyenda_hoy" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="24dp"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/titulo_horas"
+                        style="@style/Texto.Ceja"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="@string/horas"
+                        tools:text="Horas del JUE 11 FEB" />
+
+                    <TextView
+                        style="@style/Texto.Nota"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/duran_una_hora" />
+                </LinearLayout>
+
+                <TextView
+                    android:id="@+id/ayuda_horas"
+                    style="@style/Texto.Cuerpo"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="12dp"
+                    android:text="@string/elige_un_dia" />
+
+                <com.google.android.material.chip.ChipGroup
+                    android:id="@+id/horas"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="12dp"
+                    app:chipSpacingHorizontal="@dimen/separacion_horas"
+                    app:chipSpacingVertical="8dp"
+                    app:singleSelection="true" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/boton_pedir"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    android:enabled="false"
+                    android:text="@string/elige_dia_y_hora" />
+
+                <TextView
+                    style="@style/Texto.Nota"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:gravity="center"
+                    android:text="@string/quedara_pendiente" />
+            </LinearLayout>
+        </androidx.core.widget.NestedScrollView>
+    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+</LinearLayout>

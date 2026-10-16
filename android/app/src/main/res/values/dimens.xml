@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Margen a los lados de las pestañas. FragmentoPedirCita lo usa para calcular el ancho
+         de las horas, por eso está aquí y no escrito a mano en el layout. -->
+    <dimen name="margen_pantalla">20dp</dimen>
+    <dimen name="separacion_horas">10dp</dimen>
+
+    <!-- Columnas de la plantilla semanal de D3: los títulos y las filas tienen que cuadrar. -->
+    <dimen name="columna_hora">70dp</dimen>
+    <dimen name="columna_cupo">46dp</dimen>
+</resources>

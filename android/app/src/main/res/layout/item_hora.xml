@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Burbuja de una hora en C2. FragmentoPedirCita le pone el ancho para que quepan tres por fila. -->
+<com.google.android.material.chip.Chip xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    style="@style/Hueco"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    tools:text="16:00" />

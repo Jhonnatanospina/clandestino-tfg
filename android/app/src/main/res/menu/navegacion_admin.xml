@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/pestana_solicitudes"
+        android:icon="@drawable/ic_bandeja"
+        android:title="@string/pestana_solicitudes" />
+    <item
+        android:id="@+id/pestana_agenda"
+        android:icon="@drawable/ic_calendario"
+        android:title="@string/pestana_agenda" />
+    <item
+        android:id="@+id/pestana_horarios"
+        android:icon="@drawable/ic_reloj"
+        android:title="@string/pestana_horarios" />
+    <item
+        android:id="@+id/pestana_clientes"
+        android:icon="@drawable/ic_usuarios"
+        android:title="@string/pestana_clientes" />
+</menu>

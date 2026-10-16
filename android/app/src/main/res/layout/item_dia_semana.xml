@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Un día de la tira de D2: abreviatura, número y un punto si ese día hay citas.
+     FragmentoAgenda le pone el fondo y los colores según esté elegido o no. -->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="0dp"
+    android:layout_height="wrap_content"
+    android:layout_margin="3dp"
+    android:layout_weight="1"
+    android:background="@drawable/celda_libre"
+    android:gravity="center_horizontal"
+    android:orientation="vertical"
+    android:paddingVertical="8dp">
+
+    <TextView
+        android:id="@+id/dia_semana"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="12sp"
+        android:textStyle="bold"
+        tools:text="LUN" />
+
+    <TextView
+        android:id="@+id/numero"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="20sp"
+        tools:text="1" />
+
+    <ImageView
+        android:id="@+id/punto"
+        android:layout_width="6dp"
+        android:layout_height="6dp"
+        android:layout_marginTop="4dp"
+        android:importantForAccessibility="no"
+        android:src="@drawable/punto"
+        app:tint="@color/acento" />
+</LinearLayout>

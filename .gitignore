@@ -1,0 +1,36 @@
+# Secretos y configuración local: nunca al repositorio
+.env
+*.local
+
+# Resultados temporales
+*.log
+*.tmp
+
+# Android / Gradle
+.gradle/
+build/
+local.properties
+*.iml
+.idea/
+captures/
+.externalNativeBuild/
+.cxx/
+
+# API (Java / Gradle)
+api/build/
+api/.gradle/
+api/out/
+
+# Sistema
+.DS_Store
+Thumbs.db
+
+# Generador de la presentación
+node_modules/
+
+# Notas de trabajo que no forman parte de la entrega. analisis/ describe por
+# dentro la app web original, que es privada y está en producción.
+analisis/
+docs/_trabajo/
+docs/PLAN-TFG-Clandestino-Android.md
+docs/diario-tecnico.md

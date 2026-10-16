@@ -1,0 +1,64 @@
+// API REST de Clandestino. Java 21 sin frameworks: el servidor HTTP es el que trae el JDK
+// (com.sun.net.httpserver) y a la base de datos se accede con JDBC a pelo.
+// Las únicas librerías de fuera son el driver de MySQL y org.json.
+
+plugins {
+    id 'application'
+}
+
+group = 'com.clandestino'
+version = '1.0'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    // Driver JDBC de MySQL. Usamos la 9.7.0 porque es la que salió con la serie 9.7 LTS del
+    // servidor que tenemos instalado (9.7.2). Solo se necesita al ejecutar, no al compilar.
+    runtimeOnly 'com.mysql:mysql-connector-j:9.7.0'
+
+    // Para leer y escribir JSON. Es la misma librería que trae Android (org.json),
+    // así la API y la app manejan el JSON de la misma forma.
+    implementation 'org.json:json:20260814'
+
+    testImplementation platform('org.junit:junit-bom:6.1.3')
+    testImplementation 'org.junit.jupiter:junit-jupiter'
+    testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+}
+
+// Compilamos para Java 21 aunque el JDK que lo compile sea más nuevo (en mi PC hay un JDK 24
+// en el PATH y el JBR 21 de Android Studio). No usamos "toolchain" porque Gradle no encuentra
+// el JBR como toolchain y obligaría a descargar otro JDK.
+tasks.withType(JavaCompile).configureEach {
+    options.release = 21
+    options.encoding = 'UTF-8'
+    options.compilerArgs << '-Xlint:all' << '-Xlint:-serial'
+}
+
+application {
+    mainClass = 'com.clandestino.api.Aplicacion'
+}
+
+test {
+    useJUnitPlatform()
+    // Los tests de integración usan una base de datos aparte (clandestino_api_test) y la
+    // vacían antes de cada prueba, así que no pueden ir en paralelo.
+    maxParallelForks = 1
+    testLogging {
+        events 'passed', 'skipped', 'failed'
+        exceptionFormat = 'full'
+        showStandardStreams = true
+    }
+}
+
+// Crea el usuario administrador (el barbero). Se lanza una sola vez:
+//     gradlew crearAdmin --args="barbero +34600111222"
+// y pide la contraseña por la consola.
+tasks.register('crearAdmin', JavaExec) {
+    group = 'clandestino'
+    description = 'Crea el usuario administrador en la base de datos'
+    classpath = sourceSets.main.runtimeClasspath
+    mainClass = 'com.clandestino.api.herramientas.CrearAdmin'
+    standardInput = System.in
+}

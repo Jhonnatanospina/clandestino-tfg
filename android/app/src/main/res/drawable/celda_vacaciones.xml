@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Vacaciones: el azul informativo, que solo se usa para esto. -->
+<shape xmlns:android="http://schemas.android.com/apk/res/android" android:shape="rectangle">
+    <solid android:color="@color/info_suave" />
+    <stroke android:width="2dp" android:color="@color/info_tinta" />
+    <corners android:radius="12dp" />
+</shape>

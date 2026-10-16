@@ -1,0 +1,4 @@
+﻿Aquí van las plantillas oficiales de la línea 2, descargadas de UNIVERSAE360:
+  - Plantilla del trabajo escrito (Word, .docx)
+  - Plantilla de la presentación para el vídeo (PowerPoint, .pptx)
+La normativa pide usarlas sin modificar su formato.

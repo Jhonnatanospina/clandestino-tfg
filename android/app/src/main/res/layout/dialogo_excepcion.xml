@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Cuerpo del diálogo de D3 para añadir vacaciones o un día extra. El tramo de horas solo se
+     ve en los días extra; la ayuda de abajo, solo en las vacaciones. -->
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:paddingHorizontal="24dp"
+        android:paddingTop="8dp">
+
+        <com.google.android.material.button.MaterialButtonToggleGroup
+            android:id="@+id/tipo"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:checkedButton="@id/boton_vacaciones"
+            app:selectionRequired="true"
+            app:singleSelection="true">
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/boton_vacaciones"
+                style="@style/Boton.Segmento"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/tipo_vacaciones" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/boton_dia_extra"
+                style="@style/Boton.Segmento"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/tipo_dia_extra" />
+        </com.google.android.material.button.MaterialButtonToggleGroup>
+
+        <TextView
+            android:id="@+id/etiqueta_fechas"
+            style="@style/Texto.Ceja"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:text="@string/dias" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/boton_fechas"
+            style="@style/Boton.Celda"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="6dp"
+            android:paddingHorizontal="14dp"
+            android:text="@string/elige_fechas"
+            android:textAlignment="viewStart"
+            app:icon="@drawable/ic_calendario"
+            app:iconTint="@color/secundario" />
+
+        <!-- Tramo del día extra: mismas casillas que la plantilla semanal. -->
+        <LinearLayout
+            android:id="@+id/tramo"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:baselineAligned="false"
+            android:orientation="horizontal"
+            android:visibility="gone">
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <TextView
+                    style="@style/Texto.Ceja"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/inicio" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/boton_inicio"
+                    style="@style/Boton.Celda"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <TextView
+                    style="@style/Texto.Ceja"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/fin" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/boton_fin"
+                    style="@style/Boton.Celda"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="@dimen/columna_hora"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:orientation="vertical">
+
+                <TextView
+                    style="@style/Texto.Ceja"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/cupo" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/boton_cupo"
+                    style="@style/Boton.Celda"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/caja_nota"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:hint="@string/campo_nota"
+            app:counterEnabled="true"
+            app:counterMaxLength="80">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/campo_nota"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="textCapSentences"
+                android:maxLength="80"
+                android:maxLines="1" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <TextView
+            android:id="@+id/ayuda_vacaciones"
+            style="@style/Texto.Nota"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:text="@string/vacaciones_ayuda" />
+
+        <!-- Lo que falla al pulsar Guardar; el diálogo no se cierra hasta arreglarlo. -->
+        <TextView
+            android:id="@+id/error"
+            style="@style/Texto.Nota"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:textColor="@color/acento"
+            android:visibility="gone" />
+    </LinearLayout>
+</ScrollView>

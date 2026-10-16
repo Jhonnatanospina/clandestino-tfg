@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- A3 · Acceso pendiente o bloqueado. Toda la pantalla se puede deslizar hacia abajo para
+     volver a preguntar a la API. -->
+<androidx.swiperefreshlayout.widget.SwipeRefreshLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/deslizar"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
+    tools:context=".ui.acceso.ActividadEspera">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fillViewport="true">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:orientation="vertical"
+            android:paddingHorizontal="24dp"
+            android:paddingTop="24dp"
+            android:paddingBottom="24dp">
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/boton_recargar"
+                style="@style/Boton.Icono"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:contentDescription="@string/recargar"
+                app:icon="@drawable/ic_refrescar" />
+
+            <TextView
+                style="@style/Texto.Nota"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/desliza_para_comprobar" />
+
+            <ImageView
+                android:id="@+id/icono"
+                android:layout_width="96dp"
+                android:layout_height="96dp"
+                android:layout_marginTop="56dp"
+                android:background="@drawable/fondo_circulo"
+                android:importantForAccessibility="no"
+                android:padding="26dp"
+                android:src="@drawable/ic_reloj" />
+
+            <TextView
+                android:id="@+id/titulo"
+                style="@style/Texto.Titulo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="40dp"
+                android:gravity="center"
+                android:textSize="36sp"
+                tools:text="@string/espera_titulo_pendiente" />
+
+            <TextView
+                android:id="@+id/saludo"
+                style="@style/Texto.Destacado"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                tools:text="Hola, @diego" />
+
+            <TextView
+                android:id="@+id/explicacion"
+                style="@style/Texto.Cuerpo"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:gravity="center"
+                tools:text="@string/espera_texto_pendiente" />
+
+            <TextView
+                android:id="@+id/chip_estado"
+                style="@style/Texto.Chip"
+                android:layout_marginTop="28dp"
+                tools:text="Pendiente" />
+
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:minHeight="24dp" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/boton_comprobar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/comprobar_de_nuevo" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/boton_salir"
+                style="@style/Boton.Secundario"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:minHeight="52dp"
+                android:text="@string/cerrar_sesion" />
+        </LinearLayout>
+    </ScrollView>
+</androidx.swiperefreshlayout.widget.SwipeRefreshLayout>

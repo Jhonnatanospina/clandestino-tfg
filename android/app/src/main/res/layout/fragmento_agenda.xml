@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- D2 · Agenda: la semana con sus flechas, la tira de siete días y las citas confirmadas del
+     día elegido. -->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <include layout="@layout/cabecera" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingHorizontal="@dimen/margen_pantalla">
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/boton_semana_anterior"
+            style="@style/Boton.Icono"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:contentDescription="@string/semana_anterior"
+            app:icon="@drawable/ic_chev_izq" />
+
+        <TextView
+            android:id="@+id/semana"
+            style="@style/Texto.Destacado"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:letterSpacing="0.06"
+            android:textStyle="bold"
+            tools:text="1 – 7 FEB 2027" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/boton_semana_siguiente"
+            style="@style/Boton.Icono"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:contentDescription="@string/semana_siguiente"
+            app:icon="@drawable/ic_chev_der" />
+    </LinearLayout>
+
+    <!-- Los siete días los añade el código (item_dia_semana.xml). -->
+    <LinearLayout
+        android:id="@+id/tira_dias"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:orientation="horizontal"
+        android:paddingHorizontal="16dp" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingHorizontal="@dimen/margen_pantalla">
+
+        <TextView
+            android:id="@+id/titulo_dia"
+            style="@style/Texto.Ceja"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            tools:text="Lunes 1 de febrero" />
+
+        <TextView
+            android:id="@+id/numero_citas"
+            style="@style/Texto.Nota"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            tools:text="2 citas" />
+    </LinearLayout>
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginTop="8dp"
+        android:layout_weight="1">
+
+        <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+            android:id="@+id/deslizar"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/lista"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:clipToPadding="false"
+                android:paddingHorizontal="@dimen/margen_pantalla"
+                android:paddingBottom="16dp"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
+        </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+
+        <TextView
+            android:id="@+id/vacio"
+            style="@style/Texto.Cuerpo"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:paddingHorizontal="40dp"
+            android:text="@string/sin_citas_dia"
+            android:visibility="gone" />
+    </FrameLayout>
+</LinearLayout>

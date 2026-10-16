@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Tarjeta de una cita confirmada en D2. "Asistió" y "No vino" solo se activan cuando la hora ya
+     ha llegado; "Cancelar", solo antes (RN-16 y RN-17). -->
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    style="@style/Tarjeta"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="12dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="16dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/hora"
+                style="@style/Texto.Destacado"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                tools:text="17:00" />
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="14dp"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/usuario"
+                    style="@style/Texto.Destacado"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    tools:text="\@ana" />
+
+                <TextView
+                    android:id="@+id/telefono"
+                    style="@style/Texto.Nota"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    tools:text="+34 611 222 333" />
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/chip_estado"
+                style="@style/Texto.Chip"
+                tools:text="Confirmada" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:orientation="horizontal">
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/boton_asistio"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:minHeight="48dp"
+                android:paddingHorizontal="4dp"
+                android:text="@string/asistio"
+                android:textSize="15sp" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/boton_no_vino"
+                style="@style/Boton.Secundario"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="8dp"
+                android:layout_weight="1"
+                android:paddingHorizontal="4dp"
+                android:text="@string/no_vino" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/boton_cancelar"
+                style="@style/Boton.Secundario"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:paddingHorizontal="4dp"
+                android:text="@string/cancelar" />
+        </LinearLayout>
+    </LinearLayout>
+</com.google.android.material.card.MaterialCardView>

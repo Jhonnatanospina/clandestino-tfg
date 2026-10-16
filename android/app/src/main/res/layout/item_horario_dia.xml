@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Una fila de la plantilla semanal: interruptor, nombre del día y sus tres valores.
+     Con el día apagado, las casillas se desactivan pero siguen enseñando lo último guardado. -->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:gravity="center_vertical"
+    android:minHeight="56dp"
+    android:orientation="horizontal">
+
+    <com.google.android.material.materialswitch.MaterialSwitch
+        android:id="@+id/interruptor"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+    <TextView
+        android:id="@+id/nombre"
+        style="@style/Texto.Destacado"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="6dp"
+        android:layout_weight="1"
+        android:ellipsize="end"
+        android:maxLines="1"
+        android:textSize="15sp"
+        tools:text="Miércoles" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/boton_inicio"
+        style="@style/Boton.Celda"
+        android:layout_width="@dimen/columna_hora"
+        android:layout_height="wrap_content"
+        tools:text="16:00" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/boton_fin"
+        style="@style/Boton.Celda"
+        android:layout_width="@dimen/columna_hora"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="4dp"
+        tools:text="22:00" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/boton_cupo"
+        style="@style/Boton.Celda"
+        android:layout_width="@dimen/columna_cupo"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="4dp"
+        tools:text="2" />
+</LinearLayout>

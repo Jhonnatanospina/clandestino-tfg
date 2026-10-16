@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Un código de invitación de D4: el código, la nota con su estado y el chip. -->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <View
+        android:id="@+id/separador"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/filete" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingVertical="10dp">
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/codigo"
+                style="@style/Texto.Destacado"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="monospace"
+                android:letterSpacing="0.06"
+                android:textSize="16sp"
+                tools:text="K7M4X9PQR2WD" />
+
+            <TextView
+                android:id="@+id/detalle"
+                style="@style/Texto.Nota"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                tools:text="Diego · usada por \@diego" />
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/chip_estado"
+            style="@style/Texto.Chip"
+            tools:text="Usada" />
+    </LinearLayout>
+</LinearLayout>

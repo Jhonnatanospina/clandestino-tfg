@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mxfile host="app.diagrams.net" agent="generador TFG Clandestino" version="24.0.0">
+  <diagram id="01-arquitectura" name="01-arquitectura">
+    <mxGraphModel dx="0" dy="0" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="762" pageHeight="850" math="0" shadow="0" background="#FFFFFF">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="c2" value="Capa de presentación · App Android en el emulador (Java, XML, Material 3, MVVM)" style="swimlane;html=1;whiteSpace=wrap;collapsible=0;startSize=34;fillColor=#DD0426;swimlaneFillColor=#F2F2F4;strokeColor=#5A5A5E;strokeWidth=1.5;fontColor=#FFFFFF;fontStyle=1;fontSize=15;fontFamily=Arial;align=left;spacingLeft=12;rounded=0;" vertex="1" parent="1">
+          <mxGeometry x="0" y="0" width="742" height="250" as="geometry" />
+        </mxCell>
+        <mxCell id="c3" value="&lt;b style=&quot;font-size:15px&quot;&gt;Vista&lt;/b&gt;&lt;br&gt;&lt;span style=&quot;font-size:13px&quot;&gt;Activity y Fragment&lt;/span&gt;&lt;br&gt;&lt;span style=&quot;font-size:13px&quot;&gt;layouts XML&lt;/span&gt;" style="rounded=1;arcSize=8;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#5A5A5E;strokeWidth=1.5;fontColor=#121212;fontFamily=Arial;fontSize=13;align=center;verticalAlign=middle;" vertex="1" parent="c2">
+          <mxGeometry x="16" y="52" width="152" height="78" as="geometry" />
+        </mxCell>
+        <mxCell id="c4" value="&lt;b style=&quot;font-size:15px&quot;&gt;ViewModel&lt;/b&gt;&lt;br&gt;&lt;span style=&quot;font-size:13px&quot;&gt;estado con LiveData&lt;/span&gt;&lt;br&gt;&lt;span style=&quot;font-size:13px&quot;&gt;resiste la rotación&lt;/span&gt;" style="rounded=1;arcSize=8;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#5A5A5E;strokeWidth=1.5;fontColor=#121212;fontFamily=Arial;fontSize=13;align=center;verticalAlign=middle;" vertex="1" parent="c2">
+          <mxGeometry x="202" y="52" width="152" height="78" as="geometry" />
+        </mxCell>
+        <mxCell id="c5" value="&lt;b style=&quot;font-size:15px&quot;&gt;Repositorio&lt;/b&gt;&lt;br&gt;&lt;span style=&quot;font-size:13px&quot;&gt;única puerta a los&lt;/span&gt;&lt;br&gt;&lt;span style=&quot;font-size:13px&quot;&gt;datos de la app&lt;/span&gt;" style="rounded=1;arcSize=8;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#5A5A5E;strokeWidth=1.5;fontColor=#121212;fontFamily=Arial;fontSize=13;align=center;verticalAlign=middle;" vertex="1" parent="c2">
+          <mxGeometry x="388" y="52" width="152" height="78" as="geometry" />
+        </mxCell>
+        <mxCell id="c6" value="&lt;b style=&quot;font-size:15px&quot;&gt;ClienteApi&lt;/b&gt;&lt;br&gt;&lt;span style=&quot;font-size:13px&quot;&gt;HttpURLConnection&lt;/span&gt;&lt;br&gt;&lt;span style=&quot;font-size:13px&quot;&gt;en hilo secundario&lt;/span&gt;" style="rounded=1;arcSize=8;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#5A5A5E;strokeWidth=1.5;fontColor=#121212;fontFamily=Arial;fontSize=13;align=center;verticalAlign=middle;" vertex="1" parent="c2">
+          <mxGeometry x="574" y="52" width="152" height="78" as="geometry" />
+        </mxCell>
+        <mxCell id="c7" value="&lt;b style=&quot;font-size:15px&quot;&gt;Android Keystore&lt;/b&gt;&lt;br&gt;&lt;span style=&quot;font-size:13px&quot;&gt;clave AES-GCM que cifra el JWT de la sesión,&lt;/span&gt;&lt;br&gt;&lt;span style=&quot;font-size:13px&quot;&gt;guardado en SharedPreferences&lt;/span&gt;" style="rounded=1;arcSize=8;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#DD0426;strokeWidth=2.5;fontColor=#121212;fontFamily=Arial;fontSize=13;align=center;verticalAlign=middle;" vertex="1" parent="c2">
+          <mxGeometry x="202" y="168" width="338" height="66" as="geometry" />
+        </mxCell>
+        <mxCell id="e8" value="" style="html=1;edgeStyle=none;rounded=0;endArrow=block;endFill=1;endSize=7;strokeColor=#121212;strokeWidth=2;fontFamily=Arial;fontSize=13;fontColor=#121212;exitX=1;exitY=0.5;entryX=0;entryY=0.5;" edge="1" parent="1" source="c3" target="c4">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e9" value="" style="html=1;edgeStyle=none;rounded=0;endArrow=block;endFill=1;endSize=7;strokeColor=#121212;strokeWidth=2;fontFamily=Arial;fontSize=13;fontColor=#121212;exitX=1;exitY=0.5;entryX=0;entryY=0.5;" edge="1" parent="1" source="c4" target="c5">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e10" value="" style="html=1;edgeStyle=none;rounded=0;endArrow=block;endFill=1;endSize=7;strokeColor=#121212;strokeWidth=2;fontFamily=Arial;fontSize=13;fontColor=#121212;exitX=1;exitY=0.5;entryX=0;entryY=0.5;" edge="1" parent="1" source="c5" target="c6">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e11" value="guarda y lee el JWT" style="html=1;edgeStyle=none;rounded=0;endArrow=block;endFill=1;endSize=7;strokeColor=#121212;strokeWidth=2;fontFamily=Arial;fontSize=13;fontColor=#121212;startArrow=block;startFill=1;startSize=7;exitX=0.7751;exitY=0;entryX=0.5;entryY=1;align=left;spacingLeft=14;labelBackgroundColor=none;" edge="1" parent="1" source="c7" target="c5">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="c12" value="Capa de negocio · API REST en el PC (Java 21, HttpServer del JDK)" style="swimlane;html=1;whiteSpace=wrap;collapsible=0;startSize=34;fillColor=#DD0426;swimlaneFillColor=#F2F2F4;strokeColor=#5A5A5E;strokeWidth=1.5;fontColor=#FFFFFF;fontStyle=1;fontSize=15;fontFamily=Arial;align=left;spacingLeft=12;rounded=0;" vertex="1" parent="1">
+          <mxGeometry x="0" y="346" width="742" height="250" as="geometry" />
+        </mxCell>
+        <mxCell id="c13" value="&lt;b style=&quot;font-size:15px&quot;&gt;http&lt;/b&gt;&lt;br&gt;&lt;span style=&quot;font-size:13px&quot;&gt;Enrutador y rutas&lt;/span&gt;&lt;br&gt;&lt;span style=&quot;font-size:13px&quot;&gt;pool de 8 hilos&lt;/span&gt;" style="rounded=1;arcSize=8;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#5A5A5E;strokeWidth=1.5;fontColor=#121212;fontFamily=Arial;fontSize=13;align=center;verticalAlign=middle;" vertex="1" parent="c12">
+          <mxGeometry x="574" y="52" width="152" height="78" as="geometry" />
+        </mxCell>
+        <mxCell id="c14" value="&lt;b style=&quot;font-size:15px&quot;&gt;servicio&lt;/b&gt;&lt;br&gt;&lt;span style=&quot;font-size:13px&quot;&gt;reglas de negocio:&lt;/span&gt;&lt;br&gt;&lt;span style=&quot;font-size:13px&quot;&gt;reserva y cupo&lt;/span&gt;" style="rounded=1;arcSize=8;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#5A5A5E;strokeWidth=1.5;fontColor=#121212;fontFamily=Arial;fontSize=13;align=center;verticalAlign=middle;" vertex="1" parent="c12">
+          <mxGeometry x="388" y="52" width="152" height="78" as="geometry" />
+        </mxCell>
+        <mxCell id="c15" value="&lt;b style=&quot;font-size:15px&quot;&gt;repositorio&lt;/b&gt;&lt;br&gt;&lt;span style=&quot;font-size:13px&quot;&gt;JDBC con&lt;/span&gt;&lt;br&gt;&lt;span style=&quot;font-size:13px&quot;&gt;PreparedStatement&lt;/span&gt;" style="rounded=1;arcSize=8;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#5A5A5E;strokeWidth=1.5;fontColor=#121212;fontFamily=Arial;fontSize=13;align=center;verticalAlign=middle;" vertex="1" parent="c12">
+          <mxGeometry x="202" y="52" width="152" height="78" as="geometry" />
+        </mxCell>
+        <mxCell id="c16" value="&lt;b style=&quot;font-size:15px&quot;&gt;seguridad&lt;/b&gt;&lt;br&gt;&lt;span style=&quot;font-size:13px&quot;&gt;PBKDF2 y JWT (HS256) firmado con HMAC,&lt;/span&gt;&lt;br&gt;&lt;span style=&quot;font-size:13px&quot;&gt;filtro que valida el token en cada petición&lt;/span&gt;" style="rounded=1;arcSize=8;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#5A5A5E;strokeWidth=1.5;fontColor=#121212;fontFamily=Arial;fontSize=13;align=center;verticalAlign=middle;" vertex="1" parent="c12">
+          <mxGeometry x="388" y="168" width="338" height="66" as="geometry" />
+        </mxCell>
+        <mxCell id="e17" value="" style="html=1;edgeStyle=none;rounded=0;endArrow=block;endFill=1;endSize=7;strokeColor=#121212;strokeWidth=2;fontFamily=Arial;fontSize=13;fontColor=#121212;exitX=0;exitY=0.5;entryX=1;entryY=0.5;" edge="1" parent="1" source="c13" target="c14">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e18" value="" style="html=1;edgeStyle=none;rounded=0;endArrow=block;endFill=1;endSize=7;strokeColor=#121212;strokeWidth=2;fontFamily=Arial;fontSize=13;fontColor=#121212;exitX=0;exitY=0.5;entryX=1;entryY=0.5;" edge="1" parent="1" source="c14" target="c15">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e19" value="" style="html=1;edgeStyle=none;rounded=0;endArrow=block;endFill=1;endSize=7;strokeColor=#121212;strokeWidth=2;fontFamily=Arial;fontSize=13;fontColor=#121212;exitX=0.5;exitY=1;entryX=0.7751;entryY=0;" edge="1" parent="1" source="c13" target="c16">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e20" value="" style="html=1;edgeStyle=none;rounded=0;endArrow=block;endFill=1;endSize=7;strokeColor=#121212;strokeWidth=2;fontFamily=Arial;fontSize=13;fontColor=#121212;exitX=0.5;exitY=1;entryX=0.2249;entryY=0;" edge="1" parent="1" source="c14" target="c16">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="c21" value="Capa de datos · MySQL 9.7 LTS" style="swimlane;html=1;whiteSpace=wrap;collapsible=0;startSize=34;fillColor=#DD0426;swimlaneFillColor=#F2F2F4;strokeColor=#5A5A5E;strokeWidth=1.5;fontColor=#FFFFFF;fontStyle=1;fontSize=15;fontFamily=Arial;align=left;spacingLeft=12;rounded=0;" vertex="1" parent="1">
+          <mxGeometry x="0" y="670" width="742" height="160" as="geometry" />
+        </mxCell>
+        <mxCell id="c22" value="&lt;b style=&quot;font-size:15px&quot;&gt;clandestino&lt;/b&gt;&lt;br&gt;&lt;span style=&quot;font-size:13px&quot;&gt;base de datos local&lt;/span&gt;" style="shape=cylinder3;boundedLbl=1;backgroundOutline=1;size=12;html=1;fillColor=#FFFFFF;strokeColor=#5A5A5E;strokeWidth=1.5;fontColor=#121212;fontFamily=Arial;fontSize=13;" vertex="1" parent="c21">
+          <mxGeometry x="202" y="52" width="152" height="92" as="geometry" />
+        </mxCell>
+        <mxCell id="c23" value="&lt;b style=&quot;font-size:15px&quot;&gt;5 tablas&lt;/b&gt;&lt;br&gt;&lt;span style=&quot;font-size:13px&quot;&gt;usuarios · invitaciones · citas&lt;/span&gt;&lt;br&gt;&lt;span style=&quot;font-size:13px&quot;&gt;horarios_semanales · excepciones_dia&lt;/span&gt;" style="rounded=1;arcSize=8;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#5A5A5E;strokeWidth=1.5;fontColor=#121212;fontFamily=Arial;fontSize=13;align=center;verticalAlign=middle;" vertex="1" parent="c21">
+          <mxGeometry x="388" y="60" width="338" height="76" as="geometry" />
+        </mxCell>
+        <mxCell id="e24" value="&lt;b&gt;HTTP + JSON&lt;/b&gt;&lt;br&gt;JWT en la cabecera Authorization&lt;br&gt;Emulador: http://10.0.2.2:8080" style="html=1;edgeStyle=none;rounded=0;endArrow=block;endFill=1;endSize=7;strokeColor=#121212;strokeWidth=3;fontFamily=Arial;fontSize=13;fontColor=#121212;startArrow=block;startFill=1;startSize=7;exitX=0.5;exitY=1;entryX=0.5;entryY=0;align=right;spacingRight=12;labelBackgroundColor=none;" edge="1" parent="1" source="c6" target="c13">
+          <mxGeometry relative="1" as="geometry" x="0.3" />
+        </mxCell>
+        <mxCell id="e25" value="&lt;b&gt;JDBC&lt;/b&gt;&lt;br&gt;consultas parametrizadas" style="html=1;edgeStyle=none;rounded=0;endArrow=block;endFill=1;endSize=7;strokeColor=#121212;strokeWidth=3;fontFamily=Arial;fontSize=13;fontColor=#121212;startArrow=block;startFill=1;startSize=7;exitX=0.5;exitY=1;entryX=0.5;entryY=0;align=left;spacingLeft=12;labelBackgroundColor=none;" edge="1" parent="1" source="c15" target="c22">
+          <mxGeometry relative="1" as="geometry" x="0.3" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

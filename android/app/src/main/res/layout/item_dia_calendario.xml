@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Una celda del calendario de C2. El fondo y el color del número los pone AdaptadorCalendario
+     según el estado del día. -->
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="3dp">
+
+    <TextView
+        android:id="@+id/numero"
+        android:layout_width="match_parent"
+        android:layout_height="46dp"
+        android:gravity="center"
+        android:textSize="17sp"
+        tools:background="@drawable/celda_libre"
+        tools:text="13" />
+</FrameLayout>

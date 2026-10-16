@@ -1,0 +1,4 @@
+// AGP 9.2.0 es el más nuevo que abre mi Android Studio (Panda 4). El 9.4 pide Quail 4.
+plugins {
+    id 'com.android.application' version '9.2.0' apply false
+}

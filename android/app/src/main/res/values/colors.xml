@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Colores de la marca (los mismos de los mockups). El rojo es solo para la acción
+     afirmativa y para lo seleccionado; el resto de la interfaz va en neutros. -->
+<resources>
+    <color name="fondo">#FFFFFF</color>
+    <color name="superficie">#FFFFFF</color>
+    <color name="elevado">#F2F2F4</color>
+    <color name="filete">#DADADF</color>
+    <color name="filete_fuerte">#BDBDC2</color>
+
+    <color name="tinta">#121212</color>
+    <color name="secundario">#5A5A5E</color>
+    <color name="silencio">#8E8E93</color>
+    <color name="apagado">#B9B9BE</color>
+
+    <color name="acento">#DD0426</color>
+    <color name="acento_tinta">#C40320</color>
+    <color name="acento_suave">#FCE6E9</color>
+
+    <!-- Azul informativo, solo para las vacaciones. -->
+    <color name="info_tinta">#1D4ED8</color>
+    <color name="info_suave">#E9F0FD</color>
+
+    <color name="blanco">#FFFFFF</color>
+</resources>

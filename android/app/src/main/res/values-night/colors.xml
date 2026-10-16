@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Tema oscuro: mismos nombres que en values/colors.xml, así las pantallas no cambian.
+     El rojo se aclara un poco porque sobre fondo negro el #DD0426 se ve apagado. -->
+<resources>
+    <color name="fondo">#0E0E0F</color>
+    <color name="superficie">#161618</color>
+    <color name="elevado">#222225</color>
+    <color name="filete">#2E2E33</color>
+    <color name="filete_fuerte">#45454B</color>
+
+    <color name="tinta">#F2F2F4</color>
+    <color name="secundario">#A8A8AE</color>
+    <color name="silencio">#75757B</color>
+    <color name="apagado">#4A4A50</color>
+
+    <color name="acento">#E5163A</color>
+    <color name="acento_tinta">#FF5C70</color>
+    <color name="acento_suave">#3B1119</color>
+
+    <color name="info_tinta">#8AB4FF</color>
+    <color name="info_suave">#18243D</color>
+</resources>

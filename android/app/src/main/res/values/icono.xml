@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Fuera de colors.xml para que el icono no cambie con el tema oscuro. -->
+    <color name="icono_fondo">#DD0426</color>
+</resources>

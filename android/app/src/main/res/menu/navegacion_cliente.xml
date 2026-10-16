@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/pestana_mis_citas"
+        android:icon="@drawable/ic_lista"
+        android:title="@string/pestana_mis_citas" />
+    <item
+        android:id="@+id/pestana_pedir"
+        android:icon="@drawable/ic_calendario_mas"
+        android:title="@string/pestana_pedir" />
+    <item
+        android:id="@+id/pestana_ajustes"
+        android:icon="@drawable/ic_ajustes"
+        android:title="@string/pestana_ajustes" />
+</menu>

@@ -1,0 +1,204 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Todos los textos de las pantallas. Están sacados de los mockups (docs/mockups). Los que
+     llevan mayúsculas en pantalla las ponen los estilos (textAllCaps), no el texto. -->
+<resources>
+    <string name="app_name">Clandestino</string>
+
+    <!-- Comunes -->
+    <string name="hola_usuario">Hola, @%1$s</string>
+    <string name="arroba_usuario">\@%1$s</string>
+    <string name="recargar">Recargar</string>
+    <string name="volver">Volver</string>
+    <string name="cerrar_sesion">Cerrar sesión</string>
+    <string name="cerrar_sesion_pregunta">¿Cerrar sesión?</string>
+    <string name="cerrar_sesion_texto">Para volver a entrar necesitarás tu usuario y tu contraseña.</string>
+    <string name="no">No</string>
+    <string name="cancelar">Cancelar</string>
+    <string name="guardar">Guardar</string>
+    <string name="borrar">Borrar</string>
+
+    <!-- Pestañas -->
+    <string name="pestana_mis_citas">Mis citas</string>
+    <string name="pestana_pedir">Pedir</string>
+    <string name="pestana_ajustes">Ajustes</string>
+    <string name="pestana_solicitudes">Solicitudes</string>
+    <string name="pestana_agenda">Agenda</string>
+    <string name="pestana_horarios">Horarios</string>
+    <string name="pestana_clientes">Clientes</string>
+
+    <!-- A1 · Iniciar sesión -->
+    <string name="lema">Estudio privado · solo con cita</string>
+    <string name="campo_usuario">Usuario</string>
+    <string name="campo_contrasena">Contraseña</string>
+    <string name="entrar">Entrar</string>
+    <string name="separador_o">o</string>
+    <string name="tienes_codigo">¿Tienes un código de invitación?</string>
+    <string name="crear_cuenta_con_codigo">Crear cuenta con código</string>
+    <string name="solo_por_invitacion">Acceso solo por invitación del barbero</string>
+    <string name="falta_usuario_o_contrasena">Escribe tu usuario y tu contraseña.</string>
+
+    <!-- A2 · Registro -->
+    <string name="registro_ceja">Registro con invitación</string>
+    <string name="registro_titulo">Crear cuenta</string>
+    <string name="campo_codigo">Código de invitación</string>
+    <string name="ayuda_codigo">Te lo da el barbero. Vale 7 días y un solo uso.</string>
+    <string name="ayuda_usuario">De 3 a 20: minúsculas, números y _</string>
+    <string name="campo_telefono">Teléfono</string>
+    <string name="ayuda_telefono">Con prefijo internacional</string>
+    <string name="ayuda_contrasena">Mínimo 8 caracteres</string>
+    <string name="crear_cuenta">Crear cuenta</string>
+    <string name="aviso_privacidad">Tus datos los trata el barbero solo para gestionar citas. Tus derechos, pídeselos a él.</string>
+    <string name="aviso_pendiente">Tu acceso quedará pendiente hasta que el barbero lo apruebe.</string>
+    <string name="error_codigo">Copia el código tal cual te lo pasó el barbero.</string>
+    <string name="error_usuario">Solo minúsculas, números y _, de 3 a 20.</string>
+    <string name="error_telefono">Pon el número con su prefijo, por ejemplo +34 611 222 333.</string>
+    <string name="error_contrasena">Le faltan caracteres, tienen que ser 8 o más.</string>
+
+    <!-- A3 · Espera -->
+    <string name="desliza_para_comprobar">Desliza para comprobar</string>
+    <string name="espera_titulo_pendiente">Acceso pendiente</string>
+    <string name="espera_texto_pendiente">El barbero tiene que aprobar tu cuenta antes de que puedas pedir cita. Vuelve a abrir la app más tarde o desliza hacia abajo para comprobarlo.</string>
+    <string name="espera_titulo_bloqueado">Acceso bloqueado</string>
+    <string name="espera_texto_bloqueado">El barbero ha bloqueado tu acceso. Mientras siga así no puedes pedir ni cancelar citas. Si crees que es un error, habla con él. Desliza hacia abajo para comprobar si ha cambiado.</string>
+    <string name="comprobar_de_nuevo">Comprobar de nuevo</string>
+    <string name="sigue_igual">Sigue igual. Prueba otra vez más tarde.</string>
+
+    <!-- C1 · Mis citas -->
+    <string name="mis_citas_titulo">Mis citas</string>
+    <string name="proximas">Próximas</string>
+    <string name="historial">Historial</string>
+    <string name="pediste_a_las">Pediste a las %1$s</string>
+    <string name="confirmada_a_las">Confirmada a las %1$s</string>
+    <string name="cancelar_solicitud">Cancelar solicitud</string>
+    <string name="cancelar_cita">Cancelar cita</string>
+    <string name="sin_citas">Todavía no tienes citas. Pide la primera desde la pestaña Pedir.</string>
+    <string name="cancelar_cita_pregunta">¿Cancelar la cita?</string>
+    <string name="cancelar_cita_texto">La cita del %1$s a las %2$s se cancela y la hora queda libre para otra persona.</string>
+    <string name="si_cancelar">Sí, cancelar</string>
+    <string name="cita_cancelada">Cita cancelada.</string>
+
+    <!-- C2 · Pedir cita -->
+    <string name="pedir_ceja">Elige día y hora</string>
+    <string name="pedir_titulo">Pedir cita</string>
+    <string name="leyenda_libre">Libre</string>
+    <string name="leyenda_completo">Completo</string>
+    <string name="leyenda_vacaciones">Vacaciones</string>
+    <string name="leyenda_hoy">Hoy</string>
+    <string name="horas">Horas</string>
+    <string name="horas_del">Horas del %1$s</string>
+    <string name="duran_una_hora">Duran 1 hora</string>
+    <string name="elige_un_dia">Elige un día libre para ver sus horas.</string>
+    <string name="sin_horas_libres">Ese día ya no quedan horas. Prueba con otro.</string>
+    <string name="letras_semana">LMXJVSD</string>
+    <string name="elige_dia_y_hora">Elige día y hora</string>
+    <string name="pedir_cita_boton">Pedir cita · %1$s · %2$s</string>
+    <string name="quedara_pendiente">Quedará pendiente hasta que el barbero la confirme</string>
+    <string name="cita_pedida">Cita pedida. Está pendiente hasta que el barbero la confirme.</string>
+
+    <!-- C3 · Ajustes -->
+    <string name="ajustes_titulo">Ajustes</string>
+    <string name="cuenta">Cuenta</string>
+    <string name="tema">Tema</string>
+    <string name="tema_claro">Claro</string>
+    <string name="tema_oscuro">Oscuro</string>
+    <string name="tema_se_guarda">Se guarda en este móvil</string>
+    <string name="sesion">Sesión</string>
+    <string name="version">Clandestino · versión %1$s</string>
+
+    <!-- D1 · Solicitudes -->
+    <plurals name="pendientes">
+        <item quantity="one">%d pendiente</item>
+        <item quantity="other">%d pendientes</item>
+    </plurals>
+    <string name="solicitudes_titulo">Solicitudes</string>
+    <string name="pidio_sobre">Pidió %1$s sobre las %2$s</string>
+    <string name="hora_final">Hora final</string>
+    <string name="rechazar">Rechazar</string>
+    <string name="confirmar">Confirmar</string>
+    <string name="sin_solicitudes">No hay solicitudes pendientes.</string>
+    <string name="rechazar_pregunta">¿Rechazar la solicitud?</string>
+    <string name="rechazar_texto">\@%1$s pidió el %2$s a las %3$s. Si la rechazas, esa hora vuelve a quedar libre.</string>
+    <string name="cita_confirmada">Cita confirmada.</string>
+    <string name="solicitud_rechazada">Solicitud rechazada.</string>
+
+    <!-- D2 · Agenda -->
+    <string name="agenda_ceja">Tu agenda</string>
+    <string name="agenda_titulo">Agenda</string>
+    <string name="semana_anterior">Semana anterior</string>
+    <string name="semana_siguiente">Semana siguiente</string>
+    <plurals name="citas_del_dia">
+        <item quantity="one">%d cita</item>
+        <item quantity="other">%d citas</item>
+    </plurals>
+    <string name="asistio">Asistió</string>
+    <string name="no_vino">No vino</string>
+    <string name="sin_citas_dia">No hay citas confirmadas este día.</string>
+    <string name="cancelar_cita_cliente_pregunta">¿Cancelar la cita de @%1$s?</string>
+    <string name="cancelar_cita_cliente_texto">Es el %1$s a las %2$s. La app no le manda ningún aviso, así que díselo tú.</string>
+    <string name="marcada_hecha">Marcada como hecha.</string>
+    <string name="marcada_no_vino">Marcada como no presentada.</string>
+
+    <!-- D3 · Horarios -->
+    <string name="horarios_ceja">Disponibilidad</string>
+    <string name="horarios_titulo">Horarios</string>
+    <string name="plantilla_semanal">Plantilla semanal</string>
+    <string name="inicio">Inicio</string>
+    <string name="fin">Fin</string>
+    <string name="cupo">Cupo</string>
+    <string name="cupo_pregunta">Citas como máximo el %1$s</string>
+    <string name="vacaciones_y_dias_extra">Vacaciones y días extra</string>
+    <string name="anadir">Añadir</string>
+    <string name="cerrado">Cerrado</string>
+    <string name="abierto">Abierto</string>
+    <string name="dia_extra">Día extra</string>
+    <string name="cerrado_todo_el_dia">Cerrado todo el día</string>
+    <string name="tramo_dia_extra">%1$s–%2$s · %3$s</string>
+    <string name="sin_excepciones">No hay vacaciones ni días extra de hoy en adelante.</string>
+    <string name="tramo_al_reves">El %1$s acaba antes de empezar. Revisa la hora de inicio y la de fin.</string>
+    <string name="horario_guardado">Horario guardado.</string>
+    <string name="dia_especial_guardado">Guardado.</string>
+    <string name="dia_especial_borrado">Borrado.</string>
+    <string name="borrar_dia_pregunta">¿Borrar el %1$s?</string>
+    <string name="borrar_dia_texto">Ese día vuelve a seguir la plantilla semanal. Las citas que ya hubiera no cambian.</string>
+
+    <!-- Diálogo de vacaciones y días extra -->
+    <string name="dia_especial_titulo">Añadir vacaciones o día extra</string>
+    <string name="tipo_vacaciones">Vacaciones</string>
+    <string name="tipo_dia_extra">Día extra</string>
+    <string name="dias">Días</string>
+    <string name="dia">Día</string>
+    <string name="elige_fechas">Toca para elegir</string>
+    <string name="campo_nota">Nota (opcional)</string>
+    <string name="como_mucho_31">Como mucho 31 días de una vez.</string>
+    <string name="falta_fecha">Elige primero las fechas.</string>
+    <string name="vacaciones_ayuda">Las citas que ya hay esos días no se cancelan solas.</string>
+
+    <!-- D4 · Clientes e invitaciones -->
+    <string name="clientes_ceja">Accesos</string>
+    <string name="clientes_titulo">Clientes</string>
+    <string name="invitar_a_un_cliente">Invitar a un cliente</string>
+    <string name="campo_nota_invitacion">Nota</string>
+    <string name="generar">Generar</string>
+    <string name="caduca_en_7_dias">Caduca en 7 días · un solo uso</string>
+    <string name="copiar">Copiar</string>
+    <string name="codigo_copiado">Código copiado.</string>
+    <string name="invitaciones">Invitaciones</string>
+    <string name="clientes_numero">Clientes · %1$d</string>
+    <string name="aprobar">Aprobar</string>
+    <string name="bloquear">Bloquear</string>
+    <string name="sin_invitaciones">Aún no has generado ningún código.</string>
+    <string name="sin_clientes">Aún no tienes clientes. Genera un código y pásaselo.</string>
+    <string name="usada_por">usada por @%1$s</string>
+    <string name="caduca_hoy">caduca hoy</string>
+    <string name="caduca_manana">caduca mañana</string>
+    <plurals name="caduca_en_dias">
+        <item quantity="one">caduca en %d día</item>
+        <item quantity="other">caduca en %d días</item>
+    </plurals>
+    <string name="caduco_el">caducó el %1$s</string>
+    <string name="detalle_invitacion">%1$s · %2$s</string>
+    <string name="bloquear_pregunta">¿Bloquear a @%1$s?</string>
+    <string name="bloquear_texto">No podrá pedir ni cancelar citas hasta que lo vuelvas a aprobar. Las citas que ya tiene no se tocan.</string>
+    <string name="cliente_aprobado">Cliente aprobado.</string>
+    <string name="cliente_bloqueado">Cliente bloqueado.</string>
+</resources>

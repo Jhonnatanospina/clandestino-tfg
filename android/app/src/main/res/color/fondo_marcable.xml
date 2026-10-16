@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Fondo de lo que se marca y desmarca: las horas de "Pedir cita" y el Claro / Oscuro de
+     Ajustes. Lo marcado va en rojo y lo que no se puede elegir (hora ocupada) en gris. -->
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:color="@color/elevado" android:state_enabled="false" />
+    <item android:color="@color/acento" android:state_checked="true" />
+    <item android:color="@color/superficie" />
+</selector>

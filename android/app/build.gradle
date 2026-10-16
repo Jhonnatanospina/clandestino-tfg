@@ -1,0 +1,70 @@
+// App Android de Clandestino. Java + vistas XML, sin Kotlin ni Compose.
+// Para la red no hay librerías: HttpURLConnection y org.json, que ya vienen con Android.
+
+plugins {
+    id 'com.android.application'
+}
+
+android {
+    namespace = 'com.clandestino.app'
+
+    // La plataforma instalada en mi PC es la 36.1 (36 con la revisión menor 1).
+    compileSdk {
+        version = release(36) {
+            minorApiLevel = 1
+        }
+    }
+
+    defaultConfig {
+        applicationId = 'com.clandestino.app'
+        // 26 es el primer Android que trae java.time sin tener que añadir nada.
+        minSdk = 26
+        // Con 36 no se aplica todavía el permiso de red local de Android 17,
+        // que bloquearía la conexión con la API del PC.
+        targetSdk = 36
+        versionCode = 1
+        versionName = '1.0'
+        testInstrumentationRunner = 'androidx.test.runner.AndroidJUnitRunner'
+    }
+
+    buildTypes {
+        debug {
+            // Desde el emulador, 10.0.2.2 es el propio PC. Con un móvil por cable se usa
+            // "adb reverse tcp:8080 tcp:8080" y aquí iría http://localhost:8080.
+            buildConfigField 'String', 'URL_API', '"http://10.0.2.2:8080"'
+        }
+        release {
+            // No hay servidor en internet: la versión release queda preparada pero sin URL real.
+            buildConfigField 'String', 'URL_API', '"https://clandestino.invalid"'
+            minifyEnabled = false
+        }
+    }
+
+    buildFeatures {
+        buildConfig = true
+    }
+
+    compileOptions {
+        sourceCompatibility = JavaVersion.VERSION_17
+        targetCompatibility = JavaVersion.VERSION_17
+    }
+
+    testOptions {
+        // Los tests locales usan clases de Android solo de pasada (Log, por ejemplo).
+        unitTests.returnDefaultValues = true
+    }
+}
+
+dependencies {
+    implementation 'androidx.appcompat:appcompat:1.8.0'
+    implementation 'com.google.android.material:material:1.14.0'
+    implementation 'androidx.recyclerview:recyclerview:1.4.0'
+    implementation 'androidx.swiperefreshlayout:swiperefreshlayout:1.2.0'
+    implementation 'androidx.lifecycle:lifecycle-viewmodel:2.11.0'
+    implementation 'androidx.lifecycle:lifecycle-livedata:2.11.0'
+
+    testImplementation 'junit:junit:4.13.2'
+    // OJO: el org.json que trae android.jar en los tests locales está vacío (cada método
+    // lanza "not mocked"). Para probar la lectura del JSON hace falta el de verdad.
+    testImplementation 'org.json:json:20260814'
+}

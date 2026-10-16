@@ -36,7 +36,7 @@ Si en el ensayo pasas de 9:30, recorta primero en las diapositivas 2 y 8, que so
 - Deja la app en la pantalla de entrada (A1) y la sesión cerrada.
 - Elige de antemano el día libre que vas a pedir en la demo. Tiene que estar dentro de las dos semanas reservables y con cupo.
 - Ten a mano las contraseñas de prueba del `.env`, pero que no salgan en pantalla mientras las escribes.
-- Graba antes un vídeo corto de la demo por si algo falla en directo.
+- El vídeo de respaldo ya está en `docs/presentacion/demo-respaldo.mp4`. Dura 66 segundos, no tiene sonido y la contraseña sale difuminada. Si algo falla en directo, ábrelo y cuenta encima los mismos cinco pasos.
 - Pon PowerPoint en modo moderador para ver las notas sin que salgan en la grabación.
 
 ## Texto por diapositiva
@@ -103,7 +103,7 @@ Ahora lo enseño funcionando en el emulador, con la API y MySQL en marcha en el 
 4. Voy a «Agenda» y la cita sale en esa semana como confirmada.
 5. Termino en «Horarios», donde se fijan el tramo y el cupo de cada día.
 
-Si la demo fallara, tengo grabado un vídeo corto de respaldo.
+Si la demo fallara, pongo el vídeo de respaldo, que hace este mismo recorrido con el martes 20 a las 11:00.
 
 ### 15. Conclusiones
 

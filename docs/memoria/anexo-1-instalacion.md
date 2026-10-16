@@ -17,10 +17,10 @@ Este anexo explica cómo poner en marcha el prototipo en un ordenador con Window
 
 ## I.2 Obtener el proyecto
 
-[completar: URL del repositorio público de GitHub.]
+El código está en el repositorio público https://github.com/Jhonnatanospina/clandestino-tfg.
 
 ```
-git clone [URL del repositorio] C:\Dev\clandestino-tfg
+git clone https://github.com/Jhonnatanospina/clandestino-tfg.git C:\Dev\clandestino-tfg
 ```
 
 Conviene usar una ruta corta y sin espacios ni tildes, porque Gradle y algunos scripts de MySQL dan problemas con ellas. En el resto del anexo se supone que el proyecto está en `C:\Dev\clandestino-tfg`.

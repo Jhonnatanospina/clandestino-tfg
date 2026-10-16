@@ -454,7 +454,7 @@ async function construir() {
   s = pres.addSlide({ masterName: "PORTADA", sectionTitle: "Cierre" });
   texto(s, "GRACIAS", { x: 0.7, y: 2.2, w: 7.5, h: 1.6, fontSize: 96, fontFace: TITULAR, color: C.background1 });
   texto(s, "Clandestino · [Nombre del alumno]", { x: 0.7, y: 4.0, w: 7.5, h: 0.45, fontSize: 20, bold: true, color: C.background1 });
-  texto(s, "Código y memoria: [URL del repositorio]", { x: 0.7, y: 4.5, w: 7.5, h: 0.4, fontSize: 16, color: C.accent3 });
+  texto(s, "github.com/Jhonnatanospina/clandestino-tfg", { x: 0.7, y: 4.5, w: 7.5, h: 0.4, fontSize: 16, color: C.accent3 });
   movil(s, captura("C1-mis-citas"), 9.6, 1.0, 5.0, PROP_CAPTURA, "cierre-c1", false);
   s.addNotes("Esto es todo. Gracias por la atención. El código, la memoria y los anexos de instalación están en el repositorio.");
 

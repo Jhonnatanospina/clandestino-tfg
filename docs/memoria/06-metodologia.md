@@ -56,7 +56,9 @@ Las horas dedicadas a cada etapa fueron las siguientes:
 
 ## 6.4 Control de versiones y copias de seguridad
 
-[completar: el repositorio Git todavía no está creado. Cuando exista, indicar aquí la URL del repositorio público de GitHub y cómo se han organizado los commits.]
+El proyecto está en el repositorio público de GitHub https://github.com/Jhonnatanospina/clandestino-tfg, con la rama `main`.
+
+[completar: cómo se han organizado los commits a partir de aquí.]
 
 El repositorio no incluye ningún secreto. Las claves de la base de datos, la firma del token y los usuarios de prueba están en un fichero `.env` excluido con `.gitignore`, y en su lugar se sube un `.env.example` con los nombres de las variables vacíos.
 

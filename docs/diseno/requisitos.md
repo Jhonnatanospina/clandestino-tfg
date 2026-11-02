@@ -179,7 +179,7 @@ El derecho de supresión (borrar a un cliente y sus citas) es P2: véase RF-P2-0
 
 ## 3. Pantallas y requisitos
 
-Para el diseño de mockups y de pruebas, qué requisitos se ven en cada pantalla P1.
+Para el diseño de mockups y de pruebas, qué requisitos se ven en cada pantalla P1. Al final va D5, la pantalla P2 que también está hecha.
 
 | Pantalla | Requisitos |
 |---|---|
@@ -193,15 +193,16 @@ Para el diseño de mockups y de pruebas, qué requisitos se ven en cada pantalla
 | D2 Agenda | RF-25, RF-26, RF-27 |
 | D3 Horarios y vacaciones | RF-11, RF-28, RF-29 |
 | D4 Clientes e invitaciones | RF-17, RF-18, RF-19, RF-20, RF-21 |
+| D5 Cita a mano (P2, diálogo sobre D2) | RF-P2-02 |
 
 ## 4. Requisitos P2 y P3 (fuera de la tabla principal)
 
-> **Esta tabla no forma parte de los requisitos obligatorios.** Son las ampliaciones del plan §4: P2 si hay tiempo y P3 opcional. No entran en los diagramas de casos de uso ni en los mockups obligatorios. Se recortan en este orden si el calendario aprieta: P2, calendario de tres estados, agenda semanal (plan §10).
+> **Esta tabla no forma parte de los requisitos obligatorios.** Son las ampliaciones del plan §4: P2 si hay tiempo y P3 opcional. No entran en los diagramas de casos de uso ni en los mockups obligatorios. Se recortan en este orden si el calendario aprieta: P2, calendario de tres estados, agenda semanal (plan §10). De esta tabla ya está hecho RF-P2-02, la cita a mano (D5).
 
 | ID | Prioridad | Requisito | Relacionado con | Nota |
 |---|---|---|---|---|
 | RF-P2-01 | P2 | Cambiar mi @usuario (C3). | UC02 | `PUT /api/yo`; error `usuario_en_uso`. |
-| RF-P2-02 | P2 | Crear una cita manual con `DatePickerDialog` y `TimePickerDialog` (D5). | UC08, UC09 | `POST /api/admin/citas`; nace `confirmada` y salta el cupo (T10). |
+| RF-P2-02 | P2 (hecho) | Crear una cita a mano para un cliente aprobado (D5): el día se elige con `MaterialDatePicker` y la hora en un desplegable. | UC08, UC09 | `POST /api/admin/citas`; nace `confirmada` y salta el cupo (T10, DP-14). Lo cubren 9 pruebas de la API y el recorrido en el emulador. |
 | RF-P2-03 | P2 | Eliminar un cliente y sus citas (derecho de supresión). | UC07 | `DELETE /api/admin/clientes/{id}`; cascada en `citas`, `usada_por` a `NULL` en `invitaciones`. |
 | RF-P2-04 | P2 | Precio por cliente y propina. | UC07, UC09 | La propina se guarda en `asistencia` (RN-19). El plan no define la ruta para editar el precio; la fija DP-11. |
 | RF-P2-05 | P2 | Llamar al cliente con un intent implícito `ACTION_DIAL`. | UC09 | Da uso al teléfono del cliente; no hay endpoint. |

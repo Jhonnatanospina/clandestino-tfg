@@ -1,12 +1,12 @@
 # Portada
 
-[completar: la portada y el índice se hacen sobre la plantilla oficial de la línea 2 (Word), sin cambiar su formato. Los datos que pide son estos. Borrar esta nota antes de entregar.]
+La portada y el índice ya están montados sobre la plantilla oficial de la línea 2 en `memoria-clandestino.docx`, que se genera con `_generador/montar.ps1`.
 
 | Campo | Valor |
 |---|---|
-| Título | [completar: título definitivo, por ejemplo «Clandestino: aplicación Android para la gestión de citas de una barbería»] |
-| Alumno | [completar: nombre y apellidos] |
-| Tutor | [completar: nombre del tutor] |
+| Título | Clandestino: aplicación Android de citas para barberos que trabajan desde casa |
+| Alumno | Jhonnatan Ospina Henao |
+| Tutor | Alfonso García |
 | Ciclo | Técnico Superior en Desarrollo de Aplicaciones Multiplataforma (DAM) |
 | Centro | Universae |
 | Línea | 2, desarrollo de una aplicación |
@@ -15,10 +15,10 @@
 
 # Índice
 
-El índice se genera en Word con los estilos de título de la plantilla. La estructura es esta:
+Word genera el índice a partir de los estilos de título de la plantilla. La estructura es esta:
 
-- Resumen
-- Abstract
+- 1. Resumen
+- 2. Abstract
 - 3. Introducción
   - 3.1 Contexto
   - 3.2 Problema que se resuelve
@@ -47,16 +47,17 @@ El índice se genera en Word con los estilos de título de la plantilla. La estr
   - 7.7 Organización de carpetas
   - 7.8 Pruebas
   - 7.9 Relación con los módulos del ciclo
-- 8. Conclusiones
+- 8. Conclusiones y proyección a futuro
   - 8.1 Cumplimiento de los objetivos
   - 8.2 Limitaciones
   - 8.3 Trabajo futuro
   - 8.4 Valoración personal
 - 9. Bibliografía
-- Anexo I. Manual de instalación
-- Anexo II. Manual de usuario
-- Anexo III. Documentación técnica de diseño
-- Anexo IV. Casos de prueba manuales
-- Anexo V. Diario de desarrollo
+- 10. Anexos
+  - Anexo I. Manual de instalación
+  - Anexo II. Manual de usuario
+  - Anexo III. Documentación técnica de diseño
+  - Anexo IV. Casos de prueba manuales
+  - Anexo V. Diario de desarrollo
 
-Además del índice general, Word puede generar un índice de figuras y otro de tablas a partir de los pies. En el cuerpo hay 9 figuras y 12 tablas, y en los anexos se numeran por anexo (figura II.1, tabla III.1...).
+Además del índice general, Word puede generar un índice de figuras y otro de tablas a partir de los pies. En el cuerpo hay 6 figuras y 8 tablas, y en los anexos se numeran por anexo (figura II.1, tabla III.1...).

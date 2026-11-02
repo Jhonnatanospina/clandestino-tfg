@@ -30,6 +30,7 @@ class PruebaApi {
     private static final String SECRETO = "clave-de-pruebas-con-mas-de-32-caracteres";
 
     private final HttpClient cliente = HttpClient.newBuilder().version(HttpClient.Version.HTTP_1_1).build();
+    private BaseDatos baseDatos;
     private ServidorApi servidor;
     private String base;
 
@@ -46,7 +47,7 @@ class PruebaApi {
 
     @BeforeEach
     void arrancar() throws IOException {
-        BaseDatos baseDatos = BaseDePruebas.conectar();
+        baseDatos = BaseDePruebas.conectar();
         BaseDePruebas.vaciar(baseDatos);
         BaseDePruebas.crearAdmin(baseDatos, "barbero", "clave-del-barbero");
 
@@ -199,6 +200,41 @@ class PruebaApi {
         assertEquals("datos_invalidos", pedir("GET", "/api/admin/citas?estado=inventado", admin, null).error());
         assertEquals("datos_invalidos", pedir("GET", "/api/huecos?fecha=2026-02-30", marcos, null).error());
         assertEquals("no_encontrado", pedir("POST", "/api/admin/citas/999999/rechazar", admin, null).error());
+    }
+
+    /** D5: el barbero mete a mano la cita de un cliente que le ha llamado por teléfono. */
+    @Test
+    void elBarberoCreaUnaCitaAMano() throws Exception {
+        String admin = login("barbero", "clave-del-barbero");
+        long marcos = BaseDePruebas.crearCliente(baseDatos, "marcos", "+34611000001", "aprobado");
+        String cuerpo = "{\"cliente_id\":" + marcos + ",\"fecha\":\"2026-10-07\",\"hora_final\":\"18:00\"}";
+
+        // Sin horario ese día: al barbero le da igual.
+        Respuesta creada = pedir("POST", "/api/admin/citas", admin, cuerpo);
+        assertEquals(201, creada.estado(), creada.texto());
+        JSONObject cita = creada.json();
+        assertEquals("confirmada", cita.getString("estado"));
+        assertEquals("18:00", cita.getString("hora_pedida"));
+        assertEquals("18:00", cita.getString("hora_final"));
+        assertEquals("2026-10-05T10:00:00", cita.getString("decidida_en"));
+        assertEquals("marcos", cita.getJSONObject("cliente").getString("usuario"));
+
+        // La segunda vez la hora ya está cogida.
+        assertEquals("hueco_ocupado", pedir("POST", "/api/admin/citas", admin, cuerpo).error());
+
+        // Los datos se comprueban como en el resto de rutas.
+        assertEquals("json_invalido", pedir("POST", "/api/admin/citas", admin, null).error());
+        assertEquals("datos_invalidos", pedir("POST", "/api/admin/citas", admin,
+                "{\"cliente_id\":\"" + marcos + "\",\"fecha\":\"2026-10-07\",\"hora_final\":\"19:00\"}").error());
+        assertEquals("datos_invalidos", pedir("POST", "/api/admin/citas", admin,
+                "{\"cliente_id\":" + marcos + ",\"fecha\":\"2026-10-07\"}").error());
+        assertEquals("no_encontrado", pedir("POST", "/api/admin/citas", admin,
+                "{\"cliente_id\":999999,\"fecha\":\"2026-10-07\",\"hora_final\":\"19:00\"}").error());
+
+        // La misma ruta lista con GET y crea con POST. Con otro método, el 405 dice los dos.
+        Respuesta metodo = pedir("DELETE", "/api/admin/citas", admin, null);
+        assertEquals(405, metodo.estado());
+        assertEquals("GET, POST", metodo.http().headers().firstValue("Allow").orElse(""));
     }
 
     @Test

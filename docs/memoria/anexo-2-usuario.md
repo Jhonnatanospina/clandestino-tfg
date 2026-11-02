@@ -55,7 +55,7 @@ El panel del barbero tiene cuatro pestañas: «Solicitudes», «Agenda», «Hora
 
 **Solicitudes** (figura II.7). Lista las citas pendientes con el cliente, el día y la hora que pidió. En «Hora final» se puede dejar esa hora o elegir otra del mismo día. Después se pulsa «Confirmar» o «Rechazar». Si la hora elegida ya está ocupada por otra cita, la app lo avisa y no confirma.
 
-**Agenda** (figura II.8). Muestra la semana con flechas para avanzar o retroceder. Los días que tienen citas llevan un punto rojo. Al tocar un día se ven sus citas confirmadas con la hora, el cliente y su teléfono. Cuando la hora de una cita ya ha pasado, se activan «Asistió» y «No vino». Una cita futura se puede cancelar.
+**Agenda** (figura II.8). Muestra la semana con flechas para avanzar o retroceder. Los días que tienen citas llevan un punto rojo. Al tocar un día se ven sus citas confirmadas con la hora, el cliente y su teléfono. Cuando la hora de una cita ya ha pasado, se activan «Asistió» y «No vino». Una cita futura se puede cancelar. Arriba está el botón «Nueva cita», que se explica a continuación.
 
 | | |
 |---|---|
@@ -64,27 +64,36 @@ El panel del barbero tiene cuatro pestañas: «Solicitudes», «Agenda», «Hora
 
 *Fuente de las figuras II.7 y II.8: elaboración propia.*
 
-**Horarios** (figura II.9). En la plantilla semanal cada día tiene un interruptor para abrirlo o cerrarlo, su hora de inicio, su hora de fin y su cupo, que es el número máximo de citas de ese día. Al tocar una hora se abre un reloj, y al tocar el cupo, un selector. Los cambios se aplican al pulsar «Guardar».
+**Nueva cita** (figuras II.9 a II.11). Sirve para dar cita a un cliente que llama por teléfono o la pide en persona. En el diálogo se elige el cliente entre los aprobados, el día en un calendario que empieza en hoy y la hora en una lista que va de 08:00 a 22:00 cada media hora (figura II.9). Sale ya elegido el día que se estaba mirando en la agenda, y si aún no hay clientes aprobados, el diálogo lo indica. La cita se guarda confirmada aunque ese día esté completo o cerrado, y al cliente le aparece en «Mis citas». Al guardar, la agenda salta a ese día para que se vea la cita nueva (figura II.10). Si a esa hora ya hay otra cita, la app avisa con «Esa hora ya está cogida.» y no guarda nada (figura II.11), así que basta con abrir otra vez «Nueva cita» y elegir otra hora.
 
-Debajo, en «Vacaciones y días extra», el botón «Añadir» abre un diálogo con dos opciones (figura II.10):
+| | | |
+|---|---|---|
+| ![](../capturas/D5-cita-manual.png) | ![](../capturas/D5b-cita-guardada.png) | ![](../capturas/D5c-hueco-ocupado.png) |
+| *Figura II.9. Nueva cita* | *Figura II.10. Cita guardada en la agenda* | *Figura II.11. Hora ya cogida* |
+
+*Fuente de las figuras II.9 a II.11: elaboración propia.*
+
+**Horarios** (figura II.12). En la plantilla semanal cada día tiene un interruptor para abrirlo o cerrarlo, su hora de inicio, su hora de fin y su cupo, que es el número máximo de citas de ese día. Al tocar una hora se abre un reloj, y al tocar el cupo, un selector. Los cambios se aplican al pulsar «Guardar».
+
+Debajo, en «Vacaciones y días extra», el botón «Añadir» abre un diálogo con dos opciones (figura II.13):
 
 - **Vacaciones**: se elige un día o un rango de días en el calendario y quedan cerrados.
 - **Día extra**: se elige un día, su horario y su cupo. Sirve para abrir un día que normalmente está cerrado o para cambiar el horario de un día concreto.
 
-Las vacaciones y los días extra aparecen en una lista (figura II.11), mandan sobre la plantilla semanal y se pueden borrar con la cruz de cada fila.
+Las vacaciones y los días extra aparecen en una lista (figura II.14), mandan sobre la plantilla semanal y se pueden borrar con la cruz de cada fila.
 
 | | | |
 |---|---|---|
 | ![](../capturas/D3-horarios.png) | ![](../capturas/D3b-dia-extra.png) | ![](../capturas/D3c-vacaciones.png) |
-| *Figura II.9. Horarios* | *Figura II.10. Día extra* | *Figura II.11. Vacaciones y días extra guardados* |
+| *Figura II.12. Horarios* | *Figura II.13. Día extra* | *Figura II.14. Vacaciones y días extra guardados* |
 
-*Fuente de las figuras II.9 a II.11: elaboración propia.*
+*Fuente de las figuras II.12 a II.14: elaboración propia.*
 
-**Clientes** (figuras II.12 y II.13). En «Invitar a un cliente» se escribe una nota opcional para recordar a quién va dirigido el código, por ejemplo «Primo de Dani», y se pulsa «Generar». El código aparece con un botón para copiarlo y enviarlo al cliente por el medio que se prefiera. Debajo se listan las invitaciones con su estado (pendiente, usada o caducada), y en las usadas aparece qué @usuario se registró con ella. Al final están los clientes registrados, que se pueden aprobar o bloquear. Un cliente bloqueado no puede pedir citas, pero las que ya tenía no se borran.
+**Clientes** (figuras II.15 y II.16). En «Invitar a un cliente» se escribe una nota opcional para recordar a quién va dirigido el código, por ejemplo «Primo de Dani», y se pulsa «Generar». El código aparece con un botón para copiarlo y enviarlo al cliente por el medio que se prefiera. Debajo se listan las invitaciones con su estado (pendiente, usada o caducada), y en las usadas aparece qué @usuario se registró con ella. Al final están los clientes registrados, que se pueden aprobar o bloquear. Un cliente bloqueado no puede pedir citas, pero las que ya tenía no se borran.
 
 | | |
 |---|---|
 | ![](../capturas/D4-clientes.png) | ![](../capturas/D4b-codigo-nuevo.png) |
-| *Figura II.12. Clientes* | *Figura II.13. Código recién generado* |
+| *Figura II.15. Clientes* | *Figura II.16. Código recién generado* |
 
-*Fuente de las figuras II.12 y II.13: elaboración propia.*
+*Fuente de las figuras II.15 y II.16: elaboración propia.*

@@ -172,7 +172,7 @@ public class DialogoExcepcion extends DialogFragment {
 
     private String textoFechas() {
         if (desde == null) {
-            return getString(R.string.elige_fechas);
+            return getString(R.string.toca_para_elegir);
         }
         if (desde.equals(hasta)) {
             return Formatos.diaLargo(desde);

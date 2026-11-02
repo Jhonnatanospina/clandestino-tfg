@@ -45,6 +45,17 @@
         app:icon="@drawable/ic_salir" />
 
     <com.google.android.material.button.MaterialButton
+        android:id="@+id/boton_nueva_cita"
+        style="@style/Boton.Secundario"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:text="@string/nueva_cita"
+        android:visibility="gone"
+        app:icon="@drawable/ic_mas"
+        app:iconTint="@color/tinta" />
+
+    <com.google.android.material.button.MaterialButton
         android:id="@+id/boton_refrescar"
         style="@style/Boton.Icono"
         android:layout_width="wrap_content"

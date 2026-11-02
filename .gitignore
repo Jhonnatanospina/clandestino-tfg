@@ -25,6 +25,14 @@ api/out/
 .DS_Store
 Thumbs.db
 
+# Archivos temporales de Word y Python
+~$*
+__pycache__/
+*.pyc
+
+# Vista conjunta de lectura; la entrega se conserva en Word y PDF
+docs/memoria/memoria-lectura-actualizada.md
+
 # Generador de la presentación
 node_modules/
 

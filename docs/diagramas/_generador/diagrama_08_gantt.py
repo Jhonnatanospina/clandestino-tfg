@@ -28,6 +28,7 @@ TAREAS = [
     ("Desarrollo", "API REST y sus 88 pruebas", date(2026, 10, 9), date(2026, 10, 14), True),
     ("Desarrollo", "App Android y prueba en el emulador", date(2026, 10, 14), date(2026, 10, 15), True),
     ("Desarrollo", "Diagramas al día con el código", date(2026, 10, 15), date(2026, 10, 15), True),
+    ("Desarrollo", "Cita a mano (P2) y sus 9 pruebas", date(2026, 10, 17), date(2026, 10, 17), True),
     ("Cierre", "Memoria y anexos", date(2026, 10, 16), date(2026, 10, 25), False),
     ("Cierre", "Presentación, ensayos y vídeo", date(2026, 10, 24), date(2026, 10, 31), False),
 ]
@@ -83,12 +84,14 @@ def construir() -> Diagrama:
                            "strokeWidth=2", "dashed=1", "dashPattern=6 4")
         d.celda("", barra, x0 + 2, y + 7, w - 4, FILA - 14)
 
-    # Línea de "hoy" (día en que se dibuja) y leyenda
-    hoy = date(2026, 10, 16)
+    # Línea de "hoy" (día en que se dibuja) y leyenda. Va al final del día para que lo hecho
+    # ese mismo día quede a su izquierda
+    hoy = date(2026, 10, 17)
+    x_hoy = x_dia(hoy) + DIA
     y_fin = CAB + len(TAREAS) * FILA
     d.arista(None, None, estilo("endArrow=none", "html=1", f"strokeColor={BORDE}", "strokeWidth=1.5",
                                 "dashed=1"),
-             origen_punto=(x_dia(hoy), CAB), destino_punto=(x_dia(hoy), y_fin + 6))
+             origen_punto=(x_hoy, CAB), destino_punto=(x_hoy, y_fin + 6))
     y_ley = y_fin + 14
     d.celda("", estilo("rounded=1", "arcSize=30", f"fillColor={ROJO}", f"strokeColor={ROJO}"),
             8, y_ley + 6, 34, 14)
@@ -96,5 +99,5 @@ def construir() -> Diagrama:
     d.celda("", estilo("rounded=1", "arcSize=30", f"fillColor={BLANCO}", f"strokeColor={ROJO}",
                        "strokeWidth=2", "dashed=1", "dashPattern=6 4"), 130, y_ley + 6, 34, 14)
     d.celda("previsto", texto, 166, y_ley, 90, 26)
-    d.celda("- - -  16/10/2026, fecha de esta versión", texto, 262, y_ley, 330, 26)
+    d.celda("- - -  17/10/2026, fecha de esta versión", texto, 262, y_ley, 330, 26)
     return d

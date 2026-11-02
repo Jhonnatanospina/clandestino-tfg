@@ -54,7 +54,7 @@ Prioridad según plan §4. «Estado exigido» es el `estado` que debe tener en l
 | 28 | `GET /` (página de estado) | público | — | — | P2 |
 | 29 | `POST /api/admin/copia-seguridad` | admin | `aprobado` | — | P2 |
 
-Los endpoints 25 a 29 no entran en los diagramas ni en los mockups obligatorios. El plan no define ninguna ruta para el precio por cliente (P2); véase DP-11.
+Los endpoints 25 a 29 no entran en los diagramas ni en los mockups obligatorios. De ellos solo está hecho el 26, la cita a mano de la pantalla D5, que tiene el contrato completo en el §4.1. El plan no define ninguna ruta para el precio por cliente (P2); véase DP-11.
 
 ## 3. Endpoints P1
 
@@ -527,10 +527,54 @@ Errores: `400 json_invalido` · `400 datos_invalidos` (`nota` de más de 60 cara
 
 ## 4. Endpoints P2 (fuera de los diagramas obligatorios)
 
+### 4.1 Hecho: la cita a mano
+
+#### `POST /api/admin/citas` (UC08, UC09 · pantalla D5)
+
+El barbero da cita a un cliente que llama por teléfono o la pide en persona. No pasa por las solicitudes: nace `confirmada`, con `hora_pedida` igual a `hora_final` y `decidida_en` igual a `creada_en`. Las reglas están en T10 y DP-14 (`reglas-negocio.md`).
+
+Petición:
+
+```json
+{ "cliente_id": 7, "fecha": "2026-10-08", "hora_final": "18:00" }
+```
+
+`hora_final` sigue la misma regla que al confirmar, `HH:mm` entre `08:00` y `22:00` con minutos `00` o `30` (DP-04).
+
+`201`: la cita creada, con la forma de `GET /api/admin/citas`.
+
+```json
+{
+  "id": 15,
+  "cliente": { "id": 7, "usuario": "marcos_r", "telefono": "+34611222333" },
+  "fecha": "2026-10-08",
+  "hora_pedida": "18:00",
+  "hora_final": "18:00",
+  "estado": "confirmada",
+  "precio": null,
+  "propina": null,
+  "creada_en": "2026-10-01T12:10:00",
+  "decidida_en": "2026-10-01T12:10:00"
+}
+```
+
+Errores, en el orden en que se comprueban:
+
+| Orden | Código | HTTP | Cuándo |
+|---|---|---|---|
+| 1 | `json_invalido`, `cuerpo_demasiado_grande`, `datos_invalidos` | 400 | El cuerpo no es JSON o pasa de 16 KiB, falta un campo o `hora_final` no cumple DP-04. |
+| 2 | `no_encontrado` | 404 | No hay ningún usuario con ese `cliente_id` o es el administrador. |
+| 3 | `cliente_no_aprobado` | 409 | El cliente está `pendiente` o `bloqueado`. |
+| 4 | `hora_pasada` | 400 | La fecha es anterior a hoy, o es hoy y la hora ya ha llegado. |
+| 5 | `hueco_ocupado` | 409 | Otra cita activa tiene la misma fecha y hora efectiva. |
+
+No se miran el horizonte, el horario del día ni el cupo, y la inserción no entra en el `synchronized` de `POST /api/citas`, porque el hueco lo decide el barbero. Desde que existe, la cita cuenta para el cupo del día, y si cae en una hora de la rejilla los clientes ven esa hora ocupada. El índice único `uq_citas_hueco_activo` sigue protegiendo la hora exacta, igual que al confirmar.
+
+### 4.2 Pendientes
+
 | Endpoint | Contrato resumido |
 |---|---|
 | `PUT /api/yo` | Cambia el `@usuario` del cliente `aprobado`. Cuerpo `{ "usuario": "marcos" }` con la misma normalización y regla que el registro. `200` con la cuenta (forma de `GET /api/yo`). Errores: `400 datos_invalidos`, `409 usuario_en_uso`. Tras el cambio, el siguiente login usa el nombre nuevo. |
-| `POST /api/admin/citas` | Cita manual (pantalla D5). Cuerpo `{ "cliente_id": 7, "fecha": "2026-10-08", "hora_final": "18:00" }`. Nace `confirmada`, con `hora_pedida` igual a `hora_final` y `decidida_en` relleno. Salta el cupo, pero el índice único protege la hora exacta. `201` con la cita. Errores: `400 datos_invalidos`, `404 no_encontrado` (cliente), `409 cliente_no_aprobado`, `409 hueco_ocupado`. |
 | `DELETE /api/admin/clientes/{id}` | Borrado real del cliente. Sus citas se borran en cascada (`ON DELETE CASCADE`); las invitaciones que usó se conservan con `usada_por` a `NULL`. No se puede borrar al administrador. `204`. Errores: `404 no_encontrado`. |
 | `GET /` | Página de estado en HTML, CSS y JS, pública. No muestra datos personales. |
 | `POST /api/admin/copia-seguridad` | Lanza `mysqldump` con `ProcessBuilder` y guarda el volcado fuera del repositorio. `200` con `{ "archivo": "clandestino-2026-10-01T11-30-00.sql", "bytes": 18234 }`. Errores: `500 copia_fallida`. |
@@ -547,7 +591,7 @@ El plan fija los códigos HTTP posibles (400, 401, 403, 404, 405, 409, 429) y cu
 | `fecha_fuera_de_horizonte` | 400 | La fecha es anterior a hoy o posterior a hoy + 13 días. | Decisión DP-01 |
 | `hora_fuera_de_tramo` | 400 | La hora, con su hora de duración, no cabe en el tramo del día. | Plan §5 |
 | `hora_invalida` | 400 | La hora no está alineada con la rejilla de huecos del tramo. | Original (el plan no le da código); DP-03 |
-| `hora_pasada` | 400 | La fecha es hoy y la hora ya ha llegado. | Decisión DP-02 |
+| `hora_pasada` | 400 | La fecha es hoy y la hora ya ha llegado. En la cita a mano, también una fecha anterior a hoy. | Decisión DP-02; DP-14 |
 | `invitacion_invalida` | 400 | El código de invitación no existe. | Original |
 | `no_autenticado` | 401 | Falta la cabecera `Authorization` o no es `Bearer`. Incluye `WWW-Authenticate: Bearer`. | |
 | `token_invalido` | 401 | Token mal formado, con firma incorrecta o caducado, o de un usuario que ya no existe. | Plan §3.2 |
@@ -559,7 +603,7 @@ El plan fija los códigos HTTP posibles (400, 401, 403, 404, 405, 409, 429) y cu
 | `metodo_no_permitido` | 405 | Método no previsto en una ruta existente. Incluye `Allow`. | Plan §3.2 |
 | `dia_cerrado` | 409 | El día no está abierto (sin horario activo o con excepción `cerrado`). | Plan §5 |
 | `dia_lleno` | 409 | El cupo del día está alcanzado. | Plan §5 |
-| `hueco_ocupado` | 409 | Hay otra cita activa con la misma fecha y hora efectiva. Al pedir y al confirmar. | Plan §3.2 y §5 |
+| `hueco_ocupado` | 409 | Hay otra cita activa con la misma fecha y hora efectiva. Al pedir, al confirmar y en la cita a mano. | Plan §3.2 y §5 |
 | `estado_invalido` | 409 | El estado actual del recurso no admite la operación. | |
 | `cita_pasada` | 409 | La operación exige una cita que aún no ha pasado. | Original; DP-05, DP-06 |
 | `cita_futura` | 409 | Se marca asistencia antes de que llegue la hora de la cita. | Original (`confirmada -> hecha` solo cuando la hora real ya pasó) |
@@ -570,7 +614,7 @@ El plan fija los códigos HTTP posibles (400, 401, 403, 404, 405, 409, 429) y cu
 | `error_interno` | 500 | Fallo no previsto. El cuerpo es genérico; el detalle va al registro del servidor. | DP-12 |
 | `base_de_datos_no_disponible` | 503 | Solo en `GET /api/salud`. | DP-12 |
 | `usuario_en_uso` (P2) | 409 | `PUT /api/yo` con un `@usuario` ya existente. | Original |
-| `cliente_no_aprobado` (P2) | 409 | `POST /api/admin/citas` para un cliente que no está `aprobado`. | Original |
+| `cliente_no_aprobado` (P2) | 409 | `POST /api/admin/citas` para un cliente `pendiente` o `bloqueado`. | Original; DP-14 |
 | `copia_fallida` (P2) | 500 | `mysqldump` termina con error. | |
 
 ## 6. Notas de seguridad

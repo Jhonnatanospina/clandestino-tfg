@@ -23,6 +23,12 @@ public class RepositorioClientes {
                 ClienteApi.lista("clientes", Usuario::desdeJson), callback);
     }
 
+    /** Solo los aprobados, que son los únicos a los que el barbero puede dar cita a mano (D5). */
+    public void aprobados(Callback<List<Usuario>> callback) {
+        api.enviar("GET", "/api/admin/clientes?estado=aprobado", null,
+                ClienteApi.lista("clientes", Usuario::desdeJson), callback);
+    }
+
     public void aprobar(long id, Callback<Usuario> callback) {
         api.enviar("POST", "/api/admin/clientes/" + id + "/aprobar", null, Usuario::desdeJson, callback);
     }

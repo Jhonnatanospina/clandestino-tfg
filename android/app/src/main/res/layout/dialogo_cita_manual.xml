@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- D5 · Cuerpo del diálogo de la agenda con el que el barbero mete a mano la cita de un
+     cliente: quién, qué día y a qué hora. -->
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:paddingHorizontal="24dp"
+        android:paddingTop="8dp">
+
+        <TextView
+            style="@style/Texto.Ceja"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:labelFor="@id/campo_cliente"
+            android:text="@string/cliente" />
+
+        <!-- Los dos desplegables llevan saveEnabled a false porque el diálogo ya guarda lo
+             elegido. Si la vista guardara su texto, al girar el móvil filtraría la lista y solo
+             quedaría la opción que estaba puesta. -->
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/caja_cliente"
+            style="@style/Campo.Desplegable"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="6dp"
+            app:hintEnabled="false">
+
+            <com.google.android.material.textfield.MaterialAutoCompleteTextView
+                android:id="@+id/campo_cliente"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/toca_para_elegir"
+                android:inputType="none"
+                android:saveEnabled="false"
+                android:textSize="17sp" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <TextView
+            style="@style/Texto.Ceja"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="@string/dia" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/boton_dia"
+            style="@style/Boton.Celda"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="6dp"
+            android:paddingHorizontal="14dp"
+            android:text="@string/toca_para_elegir"
+            android:textAlignment="viewStart"
+            app:icon="@drawable/ic_calendario"
+            app:iconTint="@color/secundario" />
+
+        <TextView
+            style="@style/Texto.Ceja"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:labelFor="@id/campo_hora"
+            android:text="@string/hora" />
+
+        <com.google.android.material.textfield.TextInputLayout
+            style="@style/Campo.Desplegable"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="6dp"
+            app:hintEnabled="false">
+
+            <com.google.android.material.textfield.MaterialAutoCompleteTextView
+                android:id="@+id/campo_hora"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/toca_para_elegir"
+                android:inputType="none"
+                android:saveEnabled="false"
+                android:textSize="17sp" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <TextView
+            style="@style/Texto.Nota"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="@string/cita_manual_ayuda" />
+
+        <!-- Lo que falla al pulsar Guardar; el diálogo no se cierra hasta arreglarlo. -->
+        <TextView
+            android:id="@+id/error"
+            style="@style/Texto.Nota"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:textColor="@color/acento"
+            android:visibility="gone" />
+    </LinearLayout>
+</ScrollView>

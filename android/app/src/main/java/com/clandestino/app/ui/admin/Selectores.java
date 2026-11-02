@@ -3,23 +3,43 @@ package com.clandestino.app.ui.admin;
 import android.content.Context;
 
 import com.clandestino.app.R;
+import com.clandestino.app.utilidades.Formatos;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.material.timepicker.MaterialTimePicker;
 import com.google.android.material.timepicker.TimeFormat;
 
 import java.time.LocalTime;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 import java.util.function.IntConsumer;
 
 /**
- * Los dos selectores que comparten la plantilla semanal y el diálogo de día extra: el reloj
- * para las horas y la lista para el cupo.
+ * Los selectores que se repiten en las pantallas del barbero: el reloj y la lista del cupo de
+ * la plantilla semanal y del día extra, y las horas del desplegable de hora final, que usan
+ * las solicitudes (D1) y la cita a mano (D5).
  */
 final class Selectores {
 
     // La API admite hasta 255, pero en una barbería de una persona con 10 sobra.
     private static final int CUPO_MAXIMO = 10;
 
+    // DP-04: la hora final se elige de 08:00 a 22:00 cada media hora, igual que en la API.
+    private static final LocalTime PRIMERA_HORA = LocalTime.of(8, 0);
+    private static final LocalTime ULTIMA_HORA = LocalTime.of(22, 0);
+
+    /** "08:00", "08:30"... "22:00", ya escritas para el desplegable. */
+    static final List<String> HORAS_FINALES = horasFinales();
+
     private Selectores() {
+    }
+
+    private static List<String> horasFinales() {
+        List<String> horas = new ArrayList<>();
+        for (LocalTime hora = PRIMERA_HORA; !hora.isAfter(ULTIMA_HORA); hora = hora.plusMinutes(30)) {
+            horas.add(Formatos.hora(hora));
+        }
+        return Collections.unmodifiableList(horas);
     }
 
     /** Reloj de Material en formato de 24 horas, empezando en la hora que ya había. */

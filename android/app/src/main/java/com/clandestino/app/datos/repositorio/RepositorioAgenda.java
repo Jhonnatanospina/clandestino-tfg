@@ -10,7 +10,7 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.List;
 
-/** Las citas vistas por el barbero: solicitudes pendientes y agenda de confirmadas. */
+/** Las citas vistas por el barbero: solicitudes pendientes, agenda de confirmadas y citas a mano. */
 public class RepositorioAgenda {
 
     private final ClienteApi api;
@@ -32,6 +32,14 @@ public class RepositorioAgenda {
             ruta.append("&hasta=").append(hasta);
         }
         api.enviar("GET", ruta.toString(), null, ClienteApi.lista("citas", Cita::desdeJson), callback);
+    }
+
+    /** D5: la cita que mete el barbero para un cliente que le ha llamado. Llega ya confirmada. */
+    public void crearCita(long clienteId, LocalDate fecha, LocalTime hora, Callback<Cita> callback) {
+        api.enviar("POST", "/api/admin/citas", () -> new JSONObject()
+                .put("cliente_id", clienteId)
+                .put("fecha", fecha.toString())
+                .put("hora_final", hora.toString()), Cita::desdeJson, callback);
     }
 
     public void confirmar(long id, LocalTime horaFinal, Callback<Cita> callback) {

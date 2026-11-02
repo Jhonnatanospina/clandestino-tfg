@@ -20,7 +20,7 @@ import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * Las citas: pedirlas, cancelarlas y todo lo que hace el barbero con ellas (confirmar,
- * rechazar, cancelar y marcar si el cliente vino).
+ * rechazar, cancelar, marcar si el cliente vino y meter una a mano).
  *
  * La parte delicada es pedir(): es la única en la que dos clientes pueden pisarse. Está
  * explicada en ese método.
@@ -121,7 +121,7 @@ public class ServicioCitas {
             }
             LocalDateTime ahora = reloj.ahora();
             if (fecha.equals(ahora.toLocalDate()) && !hora.isAfter(ahora.toLocalTime())) {
-                throw new ErrorNegocio("hora_pasada", 400, "Esa hora ya ha pasado.");
+                throw horaPasada();
             }
             // El cupo cuenta las pendientes y las confirmadas de todos los clientes.
             if (citas.contarActivas(conexion, fecha) >= tramo.cupo()) {
@@ -285,6 +285,38 @@ public class ServicioCitas {
         });
     }
 
+    /**
+     * Cita que mete el barbero a mano (T10, DP-14), para el cliente que llama por teléfono o se
+     * pasa por la barbería. No pasa por solicitudes: nace confirmada.
+     *
+     * No mira el horizonte, ni si ese día se trabaja, ni el cupo, porque es el barbero quien
+     * decide hacer un hueco. Por eso tampoco entra en el cerrojo de pedir(), que solo existe
+     * para que dos clientes no se cuelen a la vez por el cupo. Lo que sí sigue valiendo es el
+     * índice único: dos citas activas no pueden tener la misma fecha y hora.
+     */
+    public Cita crearManual(long clienteId, LocalDate fecha, LocalTime hora) {
+        comprobarHoraFinal(hora);
+        return baseDatos.enTransaccion(conexion -> {
+            Usuario cliente = usuarios.buscarPorId(conexion, clienteId).orElse(null);
+            // El barbero no se da cita a sí mismo: para esta ruta su cuenta "no existe".
+            if (cliente == null || cliente.esAdmin()) {
+                throw ErrorNegocio.noEncontrado("Ese cliente no existe.");
+            }
+            if (!cliente.estaAprobado()) {
+                throw new ErrorNegocio("cliente_no_aprobado", 409, "Ese cliente no está aprobado.");
+            }
+            LocalDateTime ahora = reloj.ahora();
+            if (!LocalDateTime.of(fecha, hora).isAfter(ahora)) {
+                throw horaPasada();
+            }
+            // Las dos horas valen lo mismo porque no hubo solicitud que mover.
+            Cita nueva = new Cita(0, clienteId, null, null, fecha, hora, hora,
+                    EstadoCita.CONFIRMADA, null, null, ahora, ahora);
+            long id = insertarOChocar(conexion, nueva);
+            return citas.buscarPorId(conexion, id).orElseThrow();
+        });
+    }
+
     // ---------------------------------------------------------------------------------------
     // Piezas comunes
     // ---------------------------------------------------------------------------------------
@@ -314,6 +346,10 @@ public class ServicioCitas {
 
     private static ErrorNegocio citaPasada() {
         return new ErrorNegocio("cita_pasada", 409, "Esa cita ya ha pasado.");
+    }
+
+    private static ErrorNegocio horaPasada() {
+        return new ErrorNegocio("hora_pasada", 400, "Esa hora ya ha pasado.");
     }
 
     private static ErrorNegocio huecoOcupado() {

@@ -30,11 +30,13 @@ import java.util.List;
 
 /**
  * D2 · Agenda de la semana. Se piden a la API las citas confirmadas de lunes a domingo de una
- * vez, y al tocar un día de la tira solo se filtra lo que ya está cargado.
+ * vez, y al tocar un día de la tira solo se filtra lo que ya está cargado. Desde aquí se abre
+ * también el diálogo de la cita a mano (D5).
  */
 public class FragmentoAgenda extends FragmentoPanel {
 
     private static final String CLAVE_DIA = "dia_elegido";
+    private static final String DIALOGO_CITA = "dialogo_cita_manual";
 
     private ModeloVistaCitasAdmin modelo;
     private SwipeRefreshLayout deslizar;
@@ -59,7 +61,13 @@ public class FragmentoAgenda extends FragmentoPanel {
         diaElegido = guardado == null ? Formatos.hoy() : LocalDate.parse(guardado);
 
         ponerCabecera(vista, getString(R.string.agenda_ceja), R.string.agenda_titulo);
+        mostrarBoton(vista, R.id.boton_nueva_cita, v -> DialogoCitaManual.conDia(diaElegido)
+                .show(getChildFragmentManager(), DIALOGO_CITA));
         mostrarBoton(vista, R.id.boton_refrescar, v -> modelo.recargar());
+        // Al guardar una cita a mano, la agenda se va a ese día para que se vea nada más crearla.
+        getChildFragmentManager().setFragmentResultListener(DialogoCitaManual.RESULTADO,
+                getViewLifecycleOwner(), (clave, datos) ->
+                        elegirDia(LocalDate.parse(datos.getString(DialogoCitaManual.FECHA))));
         buscarVistas(vista);
         crearTira();
 
@@ -140,9 +148,17 @@ public class FragmentoAgenda extends FragmentoPanel {
         cargarSemana();
     }
 
+    /**
+     * Desde la tira el día siempre es de la semana que se ve, pero el de una cita metida a mano
+     * puede caer en otra, y entonces hay que pedirla.
+     */
     private void elegirDia(LocalDate fecha) {
+        LocalDate lunesAnterior = lunes();
         diaElegido = fecha;
         pintarSemana();
+        if (!lunes().equals(lunesAnterior)) {
+            cargarSemana();
+        }
     }
 
     private void pintar(Resultado<List<Cita>> resultado) {

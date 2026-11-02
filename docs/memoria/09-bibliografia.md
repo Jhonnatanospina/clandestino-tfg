@@ -34,9 +34,9 @@ OWASP Cheat Sheet Series. (s. f.). *Password storage cheat sheet*. Recuperado el
 
 OWASP Mobile Application Security. (2024). *OWASP Mobile Application Security Verification Standard (MASVS)* (versión 2.1.0). https://mas.owasp.org/MASVS/
 
-Real Decreto 450/2010, de 16 de abril, por el que se establece el título de Técnico Superior en Desarrollo de Aplicaciones Multiplataforma y se fijan sus enseñanzas mínimas. *Boletín Oficial del Estado*, 123, de 20 de mayo de 2010. https://www.boe.es/eli/es/rd/2010/04/16/450
+Real Decreto 450/2010, de 16 de abril, por el que se establece el título de Técnico Superior en Desarrollo de Aplicaciones Multiplataforma y se fijan sus enseñanzas mínimas. *Boletín Oficial del Estado*, núm. 123, de 20 de mayo de 2010, pp. 43776-43846. https://www.boe.es/eli/es/rd/2010/04/16/450
 
-Reglamento (UE) 2016/679 del Parlamento Europeo y del Consejo, de 27 de abril de 2016, relativo a la protección de las personas físicas en lo que respecta al tratamiento de datos personales y a la libre circulación de estos datos y por el que se deroga la Directiva 95/46/CE (Reglamento general de protección de datos). *Diario Oficial de la Unión Europea*, L 119, de 4 de mayo de 2016. https://eur-lex.europa.eu/eli/reg/2016/679/oj
+Reglamento (UE) 2016/679 del Parlamento Europeo y del Consejo, de 27 de abril de 2016, relativo a la protección de las personas físicas en lo que respecta al tratamiento de datos personales y a la libre circulación de estos datos y por el que se deroga la Directiva 95/46/CE (Reglamento general de protección de datos). *Diario Oficial de la Unión Europea*, L 119, de 4 de mayo de 2016, pp. 1-88. https://eur-lex.europa.eu/eli/reg/2016/679/oj
 
 Schwaber, K. y Sutherland, J. (2020). *La Guía Scrum: La guía definitiva de Scrum: Las reglas del juego* (D. Martin y D. Tardini, Trads.). https://scrumguides.org/docs/scrumguide/v2020/2020-Scrum-Guide-Spanish-European.pdf
 
@@ -48,4 +48,4 @@ Square. (s. f.). *Citas Square: Precios*. Recuperado el 16 de octubre de 2026 de
 
 Treatwell. (s. f.). *Precios Treatwell Connect: paga 0% por clientes fieles*. Recuperado el 16 de octubre de 2026 de https://www.treatwell.es/partners/precios/
 
-[completar: si el título que cursa el alumno es el actualizado, sustituir el Real Decreto 450/2010 por el Real Decreto 405/2023, de 29 de mayo (*Boletín Oficial del Estado*, 132, de 3 de junio de 2023, 79000-79096, https://www.boe.es/eli/es/rd/2023/05/29/405), y cambiar la cita del apartado 3.1. Borrar esta nota antes de entregar.]
+[completar: si el título que cursa el alumno es el actualizado, sustituir el Real Decreto 450/2010 por el Real Decreto 405/2023, de 29 de mayo (*Boletín Oficial del Estado*, núm. 132, de 3 de junio de 2023, pp. 79000-79096, https://www.boe.es/eli/es/rd/2023/05/29/405), y cambiar la cita del apartado 3.1. Borrar esta nota antes de entregar.]

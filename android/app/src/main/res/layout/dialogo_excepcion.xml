@@ -53,7 +53,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="6dp"
             android:paddingHorizontal="14dp"
-            android:text="@string/elige_fechas"
+            android:text="@string/toca_para_elegir"
             android:textAlignment="viewStart"
             app:icon="@drawable/ic_calendario"
             app:iconTint="@color/secundario" />

@@ -205,14 +205,21 @@ def construir_admin():
              ['- elegirFechas()', '- elegirHora(esInicio)', '- guardar()', '- problema(): String'],
              ['- esDiaExtra: boolean', '- desde: LocalDate', '- hasta: LocalDate', '- inicio: LocalTime',
               '- fin: LocalTime', '- cupo: int'], contenida=False)
+    d5 = ui('DialogoCitaManual', 'D5 · Cita a mano',
+            ['- pintarClientes(resultado)', '- elegirDia()', '- reengancharCalendario()', '- guardar()',
+             '- problema(): String'],
+            ['- clientes: List<Usuario>', '- clienteId: long', '- clienteUsuario: String', '- fecha: LocalDate',
+             '- hora: LocalTime'], contenida=False)
     d4 = ui('FragmentoClientes', 'D4 · Clientes e invitaciones',
             ['- generar()', '- copiarCodigo()', '- pintarCodigo(invitacion)', '- pintarInvitaciones(resultado)',
              '- pintarClientes(resultado)', '- preguntarBloquear(cliente)'],
             ['- adaptadorInvitaciones: AdaptadorInvitaciones', '- adaptadorClientes: AdaptadorClientes'])
     v_cit = vm('ModeloVistaCitasAdmin', 'RepositorioAgenda',
-               ['- citas: ' + lista('Cita'), '- estado: String', '- desde: LocalDate', '- hasta: LocalDate'],
+               ['- repoClientes: RepositorioClientes', '- citas: ' + lista('Cita'),
+                '- clientes: ' + lista('Usuario'), '- estado: String', '- desde: LocalDate', '- hasta: LocalDate'],
                ['+ cargar(estado, desde, hasta)', '+ recargar()', '+ confirmar(id, horaFinal)', '+ rechazar(id)',
-                '+ marcarAsistencia(id, vino)', '+ cancelar(id)'])
+                '+ marcarAsistencia(id, vino)', '+ cancelar(id)', '+ cargarClientes()',
+                '+ crearCita(clienteId, fecha, hora)'])
     v_hor = vm('ModeloVistaHorarios', 'RepositorioHorarios',
                ['- horarios: ' + lista('HorarioSemanal'), '- excepciones: ' + lista('ExcepcionDia')],
                ['+ cargar()', '+ cambiarDia(cambiado)', '+ semanaEnPantalla(): List<HorarioSemanal>',
@@ -224,14 +231,17 @@ def construir_admin():
                ['+ cargar()', '+ aprobar(id)', '+ bloquear(id)', '+ generarInvitacion(nota)'])
     paquetes = [
         dict(nombre='ui.admin', host=host('ActividadAdmin'),
-             filas=[([d1, d2], v_cit), ([d3, d3b], v_hor), ([d4], v_cli)]),
+             filas=[([d1, d2, d5], v_cit), ([d3, d3b], v_hor), ([d4], v_cli)]),
     ]
     nota = NotaSpec('Las cuatro pestañas heredan de <b>FragmentoPanel</b> y <b>ActividadAdmin</b> de '
-                    '<b>ActividadPanel</b> (bases en 05d). <b>DialogoExcepcion</b> es un <i>DialogFragment</i> que '
-                    'abre FragmentoHorarios y comparte con él el modelo de vista. Las horas y el cupo se eligen con '
-                    'los selectores de la clase <b>Selectores</b>. Cada lista se pinta con su adaptador de '
-                    '<i>RecyclerView</i>, y las acciones de cada fila (confirmar, cancelar, bloquear...) vuelven al '
-                    'fragmento por una interfaz del propio adaptador.')
+                    '<b>ActividadPanel</b> (bases en 05d). Los dos diálogos son <i>DialogFragment</i> y usan el '
+                    'modelo de vista de la pantalla que los abre, FragmentoHorarios en el caso de '
+                    '<b>DialogoExcepcion</b> y FragmentoAgenda en el de <b>DialogoCitaManual</b>. Al guardar una '
+                    'cita a mano, la agenda salta a su día. El reloj, el cupo y las horas del desplegable de hora '
+                    'final salen de la clase '
+                    '<b>Selectores</b>. Cada lista se pinta con su adaptador de <i>RecyclerView</i>, y las acciones '
+                    'de cada fila (confirmar, cancelar, bloquear...) vuelven al fragmento por una interfaz del '
+                    'propio adaptador.')
     return figura_pares('05b-clases-app-admin', paquetes, nota)
 
 
@@ -324,12 +334,13 @@ def construir_datos():
     repo = lambda n, m: Spec(n, ['- api: ClienteApi'], m)
     r_cit = repo('RepositorioCitas', ['+ dias(cb)', '+ huecos(fecha, cb)', '+ pedir(fecha, hora, cb)', '+ misCitas(cb)',
                                       '+ cancelar(id, cb)'])
-    r_age = repo('RepositorioAgenda', ['+ citas(estado, desde, hasta, cb)', '+ confirmar(id, horaFinal, cb)',
-                                       '+ rechazar(id, cb)', '+ cancelar(id, cb)', '+ marcarAsistencia(id, vino, cb)'])
+    r_age = repo('RepositorioAgenda', ['+ citas(estado, desde, hasta, cb)', '+ crearCita(clienteId, fecha, hora, cb)',
+                                       '+ confirmar(id, horaFinal, cb)', '+ rechazar(id, cb)', '+ cancelar(id, cb)',
+                                       '+ marcarAsistencia(id, vino, cb)'])
     r_hor = repo('RepositorioHorarios', ['+ semanal(cb)', '+ guardarSemanal(horarios, cb)', '+ excepciones(cb)',
                                          '+ cerrarDias(desde, hasta, nota, cb)',
                                          '+ abrirDiaExtra(fecha, inicio, fin, cupo, nota, cb)', '+ borrarExcepcion(id, cb)'])
-    r_cli = repo('RepositorioClientes', ['+ clientes(cb)', '+ aprobar(id, cb)', '+ bloquear(id, cb)',
+    r_cli = repo('RepositorioClientes', ['+ clientes(cb)', '+ aprobados(cb)', '+ aprobar(id, cb)', '+ bloquear(id, cb)',
                                          '+ invitaciones(cb)', '+ generarInvitacion(nota, cb)'])
     n_rep = NotaSpec('El último parámetro, <b>cb</b>, es el <b>Callback&lt;T&gt;</b> que recibe la respuesta. Cada '
                      'método le pasa a <b>ClienteApi</b> un <b>Cuerpo</b> que monta el JSON y un <b>Conversor</b> que '

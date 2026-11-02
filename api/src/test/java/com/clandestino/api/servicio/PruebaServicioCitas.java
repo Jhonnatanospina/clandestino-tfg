@@ -28,7 +28,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 /**
- * Pedir, confirmar, cancelar y cerrar citas contra MySQL de verdad.
+ * Pedir, confirmar, cancelar y cerrar citas, y meterlas a mano, contra MySQL de verdad.
  *
  * El "hoy" de estos tests es el lunes 5 de octubre de 2026 a las 10:00. Hay horario el lunes
  * de 09:00 a 14:00 y el martes de 16:00 a 20:00, los dos con cupo 2. El miércoles no se trabaja.
@@ -276,6 +276,87 @@ class PruebaServicioCitas {
     @Test
     void unaPropinaNegativaSeRechaza() {
         falla("datos_invalidos", () -> servicioCitas.marcarAsistencia(1, true, new BigDecimal("-1")));
+    }
+
+    // ---------------------------------------------------------------------------------------
+    // Cita que mete el barbero a mano (T10, DP-14)
+    // ---------------------------------------------------------------------------------------
+
+    @Test
+    void laCitaDelBarberoNaceConfirmadaYConLasDosHorasIguales() {
+        Cita cita = servicioCitas.crearManual(marcos, MARTES, LocalTime.of(18, 0));
+
+        assertEquals(EstadoCita.CONFIRMADA, cita.estado());
+        assertEquals(LocalTime.of(18, 0), cita.horaPedida());
+        assertEquals(LocalTime.of(18, 0), cita.horaFinal());
+        assertEquals(LocalDateTime.of(2026, 10, 5, 10, 0), cita.creadaEn());
+        assertEquals(LocalDateTime.of(2026, 10, 5, 10, 0), cita.decididaEn());
+        assertEquals("marcos", cita.clienteUsuario());
+    }
+
+    @Test
+    void elBarberoSeSaltaElCupo() {
+        servicioCitas.pedir(marcos, MARTES, LocalTime.of(16, 0));
+        servicioCitas.pedir(lucia, MARTES, LocalTime.of(17, 0));
+        // Con el cupo 2 ya cubierto un cliente recibiría dia_lleno, pero el barbero puede meter otra.
+        assertEquals(EstadoCita.CONFIRMADA, servicioCitas.crearManual(pablo, MARTES, LocalTime.of(18, 0)).estado());
+    }
+
+    @Test
+    void laCitaDelBarberoCuentaParaElCupoDeLosClientes() {
+        servicioCitas.crearManual(marcos, MARTES, LocalTime.of(16, 0));
+        servicioCitas.crearManual(lucia, MARTES, LocalTime.of(17, 0));
+        falla("dia_lleno", () -> servicioCitas.pedir(pablo, MARTES, LocalTime.of(18, 0)));
+    }
+
+    @Test
+    void laCitaDelBarberoNoPuedeCaerEnUnaHoraCogida() {
+        servicioCitas.pedir(marcos, MARTES, LocalTime.of(17, 0));
+        // La solicitud de Marcos todavía está pendiente, pero ya ocupa su hora.
+        falla("hueco_ocupado", () -> servicioCitas.crearManual(lucia, MARTES, LocalTime.of(17, 0)));
+
+        servicioCitas.crearManual(lucia, MARTES, LocalTime.of(18, 0));
+        List<Hueco> huecos = servicioHorarios.huecos(MARTES).huecos();
+        assertTrue(huecos.contains(new Hueco(LocalTime.of(18, 0), true)), huecos.toString());
+    }
+
+    @Test
+    void soloSeLeDaCitaAUnClienteAprobado() {
+        long nuevo = BaseDePruebas.crearCliente(baseDatos, "nuevo", "+34611000004", "pendiente");
+        long vetado = BaseDePruebas.crearCliente(baseDatos, "vetado", "+34611000005", "bloqueado");
+        falla("cliente_no_aprobado", () -> servicioCitas.crearManual(nuevo, MARTES, LocalTime.of(17, 0)));
+        falla("cliente_no_aprobado", () -> servicioCitas.crearManual(vetado, MARTES, LocalTime.of(17, 0)));
+
+        long barbero = BaseDePruebas.crearAdmin(baseDatos, "barbero", "clave-del-barbero");
+        falla("no_encontrado", () -> servicioCitas.crearManual(barbero, MARTES, LocalTime.of(17, 0)));
+        falla("no_encontrado", () -> servicioCitas.crearManual(999_999, MARTES, LocalTime.of(17, 0)));
+    }
+
+    @Test
+    void laHoraDeLaCitaManualSigueLaReglaDeLaHoraFinal() {
+        falla("datos_invalidos", () -> servicioCitas.crearManual(marcos, MARTES, LocalTime.of(17, 15)));
+        falla("datos_invalidos", () -> servicioCitas.crearManual(marcos, MARTES, LocalTime.of(7, 30)));
+        falla("datos_invalidos", () -> servicioCitas.crearManual(marcos, MARTES, LocalTime.of(22, 30)));
+        // La hora se mira antes que el cliente.
+        falla("datos_invalidos", () -> servicioCitas.crearManual(999_999, MARTES, LocalTime.of(17, 15)));
+        // Fuera del tramo del martes, pero dentro de 08:00-22:00, sí vale (DP-04).
+        assertEquals(LocalTime.of(21, 30), servicioCitas.crearManual(marcos, MARTES, LocalTime.of(21, 30)).horaFinal());
+    }
+
+    @Test
+    void noSePuedeCrearUnaCitaEnElPasado() {
+        // Son las 10:00 del lunes.
+        falla("hora_pasada", () -> servicioCitas.crearManual(marcos, LUNES, LocalTime.of(10, 0)));
+        falla("hora_pasada", () -> servicioCitas.crearManual(marcos, LUNES.minusDays(3), LocalTime.of(12, 0)));
+        assertEquals(EstadoCita.CONFIRMADA, servicioCitas.crearManual(marcos, LUNES, LocalTime.of(10, 30)).estado());
+    }
+
+    @Test
+    void elBarberoPuedeDarCitaUnDiaCerradoOFueraDelHorizonte() {
+        // El miércoles no se trabaja, y dentro de un mes los clientes todavía no pueden pedir.
+        assertEquals(EstadoCita.CONFIRMADA, servicioCitas.crearManual(marcos, MIERCOLES, LocalTime.of(12, 0)).estado());
+        assertEquals(EstadoCita.CONFIRMADA,
+                servicioCitas.crearManual(marcos, LUNES.plusMonths(1), LocalTime.of(12, 0)).estado());
     }
 
     // ---------------------------------------------------------------------------------------

@@ -185,7 +185,8 @@ def construir_http_auth():
     rutas_auth = Spec('RutasAutenticacion', [],
                       ['+ registrar(enrutador)', '- registro(…)', '- login(…)', '- yo(…)', '- salud(…)'])
     rutas_adm = Spec('RutasAdmin', [],
-                     ['+ registrar(enrutador)', '- listarCitas(…)', '- confirmar(…)', '- rechazar(…)', '- cancelar(…)',
+                     ['+ registrar(enrutador)', '- listarCitas(…)', '- crearCita(…)', '- confirmar(…)', '- rechazar(…)',
+                      '- cancelar(…)',
                       '- asistencia(…)', '- horarios(…)', '- guardarHorarios(…)', '- excepciones(…)',
                       '- crearExcepciones(…)', '- borrarExcepcion(…)', '- clientes(…)', '- aprobar(…)',
                       '- bloquear(…)', '- invitaciones(…)', '- generarInvitacion(…)'])
@@ -340,7 +341,8 @@ def construir_negocio():
                  ['+ conCabecera(nombre, valor): ErrorNegocio', '+ datosInvalidos(mensaje)', '+ noEncontrado(mensaje)',
                   '+ estadoInvalido(mensaje)'], subtitulo='extends RuntimeException')
     n_sync = NotaSpec('<b>ServicioCitas</b> reserva dentro de un <i>synchronized</i> por fecha y en una sola '
-                      'transacción, así que dos clientes no pueden quedarse a la vez con el último hueco del día.',
+                      'transacción, así que dos clientes no pueden quedarse a la vez con el último hueco del día. '
+                      '<b>crearManual</b> no entra en él porque la cita a mano se salta el cupo.',
                       estira=True)
     reloj = Spec('Reloj', ['- reloj: Clock'], ['+ deMadrid(): Reloj', '+ ahora(): LocalDateTime', '+ hoy(): LocalDate',
                                                '+ instante(): Instant'], subtitulo='zona Europe/Madrid')
@@ -358,7 +360,8 @@ def construir_negocio():
                     ['+ pedir(clienteId, fecha, hora): Cita', '+ misCitas(clienteId): List<Cita>',
                      '+ cancelarPorCliente(clienteId, citaId): Cita', '+ listar(estados, desde, hasta): List<Cita>',
                      '+ confirmar(citaId, horaFinal): Cita', '+ rechazar(citaId): Cita',
-                     '+ cancelarPorAdmin(citaId): Cita', '+ marcarAsistencia(citaId, vino, propina): Cita'])
+                     '+ cancelarPorAdmin(citaId): Cita', '+ marcarAsistencia(citaId, vino, propina): Cita',
+                     '+ crearManual(clienteId, fecha, hora): Cita'])
     hor_srv = Spec('ServicioHorarios',
                    ['- baseDatos: BaseDatos', '- horarios: RepositorioHorarios', '- citas: RepositorioCitas',
                     '- reloj: Reloj'],

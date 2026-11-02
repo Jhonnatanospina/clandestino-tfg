@@ -17,7 +17,6 @@ import com.clandestino.app.utilidades.Formatos;
 import com.google.android.material.textfield.MaterialAutoCompleteTextView;
 
 import java.time.LocalTime;
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
@@ -33,11 +32,6 @@ public class AdaptadorSolicitudes extends RecyclerView.Adapter<AdaptadorSolicitu
         void rechazar(Cita cita);
     }
 
-    // DP-04: la hora final se elige de 08:00 a 22:00 cada media hora, igual que en la API.
-    private static final LocalTime PRIMERA_HORA = LocalTime.of(8, 0);
-    private static final LocalTime ULTIMA_HORA = LocalTime.of(22, 0);
-    private static final List<String> HORAS_POSIBLES = horasPosibles();
-
     private final Acciones acciones;
     private List<Cita> citas = Collections.emptyList();
     // La hora que ha elegido el barbero en cada tarjeta, por id de cita. Si no se guardara aquí,
@@ -46,14 +40,6 @@ public class AdaptadorSolicitudes extends RecyclerView.Adapter<AdaptadorSolicitu
 
     public AdaptadorSolicitudes(Acciones acciones) {
         this.acciones = acciones;
-    }
-
-    private static List<String> horasPosibles() {
-        List<String> horas = new ArrayList<>();
-        for (LocalTime hora = PRIMERA_HORA; !hora.isAfter(ULTIMA_HORA); hora = hora.plusMinutes(30)) {
-            horas.add(Formatos.hora(hora));
-        }
-        return horas;
     }
 
     // Son pocas solicitudes a la vez: se repintan todas.
@@ -94,7 +80,7 @@ public class AdaptadorSolicitudes extends RecyclerView.Adapter<AdaptadorSolicitu
             detalle = vista.findViewById(R.id.detalle);
             horaFinal = vista.findViewById(R.id.hora_final);
             horaFinal.setAdapter(new ArrayAdapter<>(vista.getContext(),
-                    android.R.layout.simple_list_item_1, HORAS_POSIBLES));
+                    android.R.layout.simple_list_item_1, Selectores.HORAS_FINALES));
         }
 
         void pintar(Cita cita) {
@@ -108,8 +94,8 @@ public class AdaptadorSolicitudes extends RecyclerView.Adapter<AdaptadorSolicitu
             LocalTime elegida = horasElegidas.getOrDefault(cita.getId(), cita.getHoraPedida());
             // OJO: con "false" no se filtra la lista; si no, el desplegable solo enseñaría esa hora.
             horaFinal.setText(Formatos.hora(elegida), false);
-            horaFinal.setOnItemClickListener((lista, fila, posicion, id) ->
-                    horasElegidas.put(cita.getId(), LocalTime.parse(HORAS_POSIBLES.get(posicion))));
+            horaFinal.setOnItemClickListener((lista, fila, posicion, id) -> horasElegidas.put(
+                    cita.getId(), LocalTime.parse(Selectores.HORAS_FINALES.get(posicion))));
 
             itemView.findViewById(R.id.boton_confirmar).setOnClickListener(v ->
                     acciones.confirmar(cita, horasElegidas.getOrDefault(cita.getId(),

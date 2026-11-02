@@ -16,6 +16,7 @@
     <string name="cancelar">Cancelar</string>
     <string name="guardar">Guardar</string>
     <string name="borrar">Borrar</string>
+    <string name="toca_para_elegir">Toca para elegir</string>
 
     <!-- Pestañas -->
     <string name="pestana_mis_citas">Mis citas</string>
@@ -138,6 +139,16 @@
     <string name="marcada_hecha">Marcada como hecha.</string>
     <string name="marcada_no_vino">Marcada como no presentada.</string>
 
+    <!-- D5 · Cita a mano (diálogo de la agenda) -->
+    <string name="nueva_cita">Nueva cita</string>
+    <string name="cliente">Cliente</string>
+    <string name="hora">Hora</string>
+    <string name="cita_manual_ayuda">Se guarda ya confirmada, aunque ese día esté completo o cerrado, y al cliente le sale en Mis citas.</string>
+    <string name="sin_clientes_aprobados">Todavía no tienes clientes aprobados. Puedes aprobarlos en la pestaña Clientes.</string>
+    <string name="faltan_datos_cita">Elige el cliente, el día y la hora.</string>
+    <string name="hora_ya_pasada">Esa hora ya ha pasado.</string>
+    <string name="cita_guardada">Cita guardada.</string>
+
     <!-- D3 · Horarios -->
     <string name="horarios_ceja">Disponibilidad</string>
     <string name="horarios_titulo">Horarios</string>
@@ -167,7 +178,6 @@
     <string name="tipo_dia_extra">Día extra</string>
     <string name="dias">Días</string>
     <string name="dia">Día</string>
-    <string name="elige_fechas">Toca para elegir</string>
     <string name="campo_nota">Nota (opcional)</string>
     <string name="como_mucho_31">Como mucho 31 días de una vez.</string>
     <string name="falta_fecha">Elige primero las fechas.</string>

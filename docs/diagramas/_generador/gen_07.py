@@ -1,7 +1,9 @@
 # -*- coding: utf-8 -*-
 """07 · Diagrama de estados de la cita.
 
-Fuente de las transiciones: docs/diseno/reglas-negocio.md §9 (T01 a T09).
+Fuente de las transiciones: docs/diseno/reglas-negocio.md §9 (T01 a T10).
+  T01 inicio -> pendiente       Cliente  (la solicita)
+  T10 (P2, hecha) inicio -> confirmada  Administrador  [cliente aprobado, hora futura y libre]
   T02 pendiente -> confirmada   Administrador  [cita no pasada, hora final libre]
   T03 pendiente -> rechazada    Administrador  (sin guarda)
   T04 pendiente -> cancelada    Cliente propietario  [cita no pasada]
@@ -77,7 +79,11 @@ def construir():
     doc.vertice('Liberan el hueco y el cupo (estados finales)', 4, YB - 20, 790, 130, marco_b)
 
     # ---- estados ---------------------------------------------------------------------
-    ini = doc.vertice('', 32, YA + HA / 2 - 11, 22, 22, estilo(ellipse=None, html=1, fillColor=TINTA, strokeColor=TINTA))
+    ini = doc.vertice('', -26, YA + HA / 2 - 11, 22, 22, estilo(ellipse=None, html=1, fillColor=TINTA, strokeColor=TINTA))
+    # La cita nace de dos maneras y UML solo deja salir una transición del estado inicial, así que
+    # se reparte en un punto de decisión (el rombo).
+    dec = doc.vertice('', 16, YA + HA / 2 - 14, 28, 28,
+                      estilo(rhombus=None, html=1, fillColor=BLANCO, strokeColor=TINTA, strokeWidth=1.8))
     pen = estado(doc, 'pendiente', 'ocupa hueco y cupo', 146, YA, w=150, hh=HA, activo=True)
     con = estado(doc, 'confirmada', 'ocupa hueco y cupo', 500, YA, w=150, hh=HA, activo=True)
     rec = estado(doc, 'rechazada', 'libera el hueco', 14, YB)
@@ -87,8 +93,15 @@ def construir():
     noa = estado(doc, 'no_asistio', 'libera el hueco', 654, YB)
 
     # ---- transiciones desde el inicio y entre estados activos ---------------------------------
-    doc.arista(ini, pen, TR, salida=(1, 0.5), entrada=(0, 0.5))
+    doc.arista(ini, dec, TR, salida=(1, 0.5), entrada=(0, 0.5))
+    doc.arista(dec, pen, TR, salida=(1, 0.5), entrada=(0, 0.5))
     rotulo(doc, 96, YA + HA / 2 - 4 - 1.5 * LH - 3, ['<b>Cliente</b>', 'solicita', 'la cita'])
+
+    # cita a mano (T10): pasa por encima de los estados activos y llega directa a confirmada
+    y_alto = -36
+    trans(doc, dec, con, (0.5, 0), (0.5, 0), [(dec.cx, y_alto), (con.cx, y_alto)])
+    rotulo(doc, (dec.cx + con.cx) / 2, y_alto,
+           ['<b>Administrador</b> crea la cita a mano (P2)', '[cliente aprobado, hora futura y libre]'])
 
     doc.arista(pen, con, TR, salida=(1, 0.5), entrada=(0, 0.5))
     rotulo(doc, (pen.r + con.x) / 2, YA + HA / 2 - 4 - 2.5 * LH - 3,
@@ -122,8 +135,9 @@ def construir():
     rotulo(doc, noa.cx, 340, ['<b>Administrador</b>', 'marca «No vino»', '[cita ya pasada]'])
 
     nota(doc, 'Solo <b>pendiente</b> y <b>confirmada</b> cuentan para el cupo diario y para el índice único '
-              '(fecha, hora_ocupada) de la tabla citas; al salir de ellas, el hueco queda libre. '
-              'El estado <b>caducada</b> y su transición, en trazo discontinuo, son P2: el P1 no los implementa.',
+              '(fecha, hora_ocupada) de la tabla citas, y al salir de ellas el hueco queda libre. '
+              'La cita a mano es de la segunda fase (P2) y ya está hecha. El estado <b>caducada</b> y su '
+              'transición, en trazo discontinuo, también son P2, pero no se han implementado.',
          4, YB + 125, 790, 78, fs=15)
     return doc
 

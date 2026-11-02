@@ -104,7 +104,7 @@ El orden va de lo más barato y estructural a lo que depende del estado actual d
 
 | ID | Regla |
 |---|---|
-| RN-24 | **Serialización de la reserva.** La carrera real es el cupo diario («contar las citas activas del día y, si hay sitio, insertar»): ningún índice la protege. El servicio guarda un objeto de bloqueo por fecha (un mapa de `LocalDate` a objeto, acotado a 14 entradas porque la fecha se valida antes, paso 6) y ejecuta los pasos 7 a 13 de RN-09 dentro de `synchronized` sobre ese objeto y de una sola transacción, con `commit` antes de soltar el bloqueo. Dos peticiones a fechas distintas no se esperan. Como red de seguridad, el índice único captura el doble reserva del mismo hueco, tanto al pedir como al confirmar. Limitación: el bloqueo vive en la memoria de un proceso, así que solo es válido con una única instancia de la API, que es la del proyecto. Pruebas: (1) cupo 1 y N peticiones a horas distintas del mismo día, que sin `synchronized` deja pasar varias y con él solo una; (2) N peticiones al mismo hueco, donde actúa el índice. |
+| RN-24 | **Serialización de la reserva.** La carrera real es el cupo diario («contar las citas activas del día y, si hay sitio, insertar»): ningún índice la protege. El servicio guarda un objeto de bloqueo por fecha (un mapa de `LocalDate` a objeto, acotado a 14 entradas porque la fecha se valida antes, paso 6) y ejecuta los pasos 7 a 13 de RN-09 dentro de `synchronized` sobre ese objeto y de una sola transacción, con `commit` antes de soltar el bloqueo. Dos peticiones a fechas distintas no se esperan. Como red de seguridad, el índice único captura el doble reserva del mismo hueco al pedir, al confirmar y en la cita a mano, que no pasa por este bloqueo (DP-14). Limitación: el bloqueo vive en la memoria de un proceso, así que solo es válido con una única instancia de la API, que es la del proyecto. Pruebas: (1) cupo 1 y N peticiones a horas distintas del mismo día, que sin `synchronized` deja pasar varias y con él solo una; (2) N peticiones al mismo hueco, donde actúa el índice. |
 
 ## 9. Transiciones de estado de la cita
 
@@ -121,7 +121,7 @@ Estados que ocupan hueco y cupo: `pendiente` y `confirmada`. Estados terminales:
 | T07 | `confirmada` | `hecha` | Administrador | La cita ha pasado. Guarda `precio` = `precio_corte` del cliente (RN-18). | `POST /api/admin/citas/{id}/asistencia` |
 | T08 | `confirmada` | `no_asistio` | Administrador | La cita ha pasado. `precio` queda `NULL`. | `POST /api/admin/citas/{id}/asistencia` |
 | T09 (P2) | `pendiente` | `caducada` | Sistema (tarea programada) | Fecha y `hora_pedida` ya pasadas. Guarda `decidida_en`. | Ninguno |
-| T10 (P2) | (no existe) | `confirmada` | Administrador | Cliente `aprobado` y hora libre; salta el cupo. | `POST /api/admin/citas` |
+| T10 (P2, hecha) | (no existe) | `confirmada` | Administrador | Cliente `aprobado` y hora futura y libre. No mira el horizonte, el horario ni el cupo (DP-14). Guarda `hora_pedida` = `hora_final` y `decidida_en`. | `POST /api/admin/citas` |
 
 ## 10. Diferencias respecto al Clandestino original
 
@@ -137,11 +137,12 @@ Se citan porque la memoria debe justificarlas (plan §4) o porque el alumno las 
 | Confirmar | Puede cambiar también el día. | Solo la hora (P1). |
 | Cancelar y rechazar | Cancelar sin diálogo; rechazar sin guarda de estado. | Cancelar con diálogo; rechazar y confirmar con guarda de estado. |
 | Fechas | `2026-02-30` pasa la validación de formato. | `LocalDate.parse` estricto. |
+| Cita a mano | Rejilla de 08:00 a 21:00 cada 15 minutos, con las horas ya cogidas tachadas. | Las horas de DP-04, las mismas que al confirmar. Si la hora está cogida, la API responde `hueco_ocupado` (DP-14). |
 | Fuera de alcance | Recurrentes (y `con_conflicto`), «otra hora» fuera de agenda, reprogramar, push y WhatsApp, métricas y finanzas. | Solo se conservan como proyección a futuro o, las métricas, como P3. |
 
 ## 11. Decisiones de diseño cerradas
 
-El alumno cerró las trece decisiones el 2026-10-01, aceptando en cada una el criterio que ya recogían el contrato de la API y los requisitos. La tabla queda como registro de la decisión tomada: la columna «Decisión» es lo que aplican los documentos y cambiarla obliga a revisar los de la columna «Afecta a».
+El alumno cerró las trece primeras decisiones el 2026-10-01, aceptando en cada una el criterio que ya recogían el contrato de la API y los requisitos. La DP-14 se añadió el 2026-10-17, al hacer la cita a mano. La tabla queda como registro de la decisión tomada: la columna «Decisión» es lo que aplican los documentos y cambiarla obliga a revisar los de la columna «Afecta a».
 
 | ID | Tema | Qué dicen las fuentes | Decisión | Afecta a | Fecha |
 |---|---|---|---|---|---|
@@ -158,3 +159,4 @@ El alumno cerró las trece decisiones el 2026-10-01, aceptando en cada una el cr
 | DP-11 | Precio por cliente (P2) | El plan lo clasifica como P2 pero no define ninguna ruta. | Si se llega a hacer (P2), la ruta es `PUT /api/admin/clientes/{id}/precio` con `{ "precio_corte": 18.00 }`, mayor que 0. | RF-P2-04 | 2026-10-01 |
 | DP-12 | Códigos HTTP y de error añadidos | El plan lista 400, 401, 403, 404, 405, 409 y 429 y cuatro códigos de reserva. | Se añaden `500 error_interno` y `503` solo para `GET /api/salud`; el límite de cuerpo se responde con 400 (no 413); el catálogo incorpora los códigos del original traducidos y los propios de este diseño (los que dependen de una decisión llevan su DP-xx en la columna «Origen»). | `api-contrato.md` §5 | 2026-10-01 |
 | DP-13 | Citas de un cliente bloqueado | El original no las cancela. | Se mantienen activas y siguen ocupando cupo. El cliente bloqueado no puede cancelarlas; el administrador las rechaza o cancela desde D1 y D2. | RN-23 | 2026-10-01 |
+| DP-14 | Cita a mano (P2) | El original crea la cita ya confirmada para un cliente aprobado, y vuelve a comprobar su estado en el servidor. Se salta la solicitud y el cupo, pero el índice único protege la hora exacta. | `POST /api/admin/citas` crea la cita `confirmada` con `hora_pedida` = `hora_final` y `decidida_en` = `creada_en`. No mira el horizonte, el horario del día ni el cupo, y no entra en el bloqueo de RN-24, aunque la cita cuenta para el cupo en cuanto existe. Las horas siguen DP-04 para usar el mismo desplegable que al confirmar. Una hora ya pasada da `400 hora_pasada`. Solo vale para clientes `aprobado` (si no, `409 cliente_no_aprobado`), y un id que no existe o el del administrador da `404 no_encontrado`. D5 no tacha las horas cogidas, así que si la hora está ocupada la API responde `409 hueco_ocupado` y el barbero elige otra. | T10, RF-P2-02, `api-contrato.md` §4.1 | 2026-10-17 |

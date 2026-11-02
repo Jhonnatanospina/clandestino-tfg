@@ -42,8 +42,10 @@ public class RepositorioCitasJdbc implements RepositorioCitas {
 
     @Override
     public long insertar(Connection conexion, Cita cita) throws SQLException {
-        String sql = "INSERT INTO citas (cliente_id, fecha, hora_pedida, hora_final, estado, creada_en) "
-                + "VALUES (?, ?, ?, ?, ?, ?)";
+        // hora_final y decidida_en llegan vacías cuando pide el cliente y rellenas cuando el
+        // barbero mete la cita a mano, que nace ya confirmada.
+        String sql = "INSERT INTO citas (cliente_id, fecha, hora_pedida, hora_final, estado, creada_en, decidida_en) "
+                + "VALUES (?, ?, ?, ?, ?, ?, ?)";
         try (PreparedStatement sentencia = conexion.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
             sentencia.setLong(1, cita.clienteId());
             sentencia.setObject(2, cita.fecha());
@@ -51,6 +53,7 @@ public class RepositorioCitasJdbc implements RepositorioCitas {
             ponerONulo(sentencia, 4, cita.horaFinal(), Types.TIME);
             sentencia.setString(5, cita.estado().enBd());
             sentencia.setObject(6, cita.creadaEn());
+            ponerONulo(sentencia, 7, cita.decididaEn(), Types.TIMESTAMP);
             sentencia.executeUpdate();
             try (ResultSet claves = sentencia.getGeneratedKeys()) {
                 claves.next();

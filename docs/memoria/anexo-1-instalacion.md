@@ -124,7 +124,7 @@ El primero crea la base `clandestino` con sus cinco tablas y carga un horario de
 
 **Comprobación:** en otra ventana, `curl http://127.0.0.1:8080/api/salud` devuelve `{"estado":"ok","base_de_datos":"ok"}`. Si MySQL está parado devuelve un error 503 `base_de_datos_no_disponible`.
 
-**Pruebas (opcional):** `scripts\bd.cmd base-tests-api` crea la base vacía de pruebas, y después `.\gradlew.bat test` pasa las 88 pruebas de la API.
+**Pruebas (opcional):** `scripts\bd.cmd base-tests-api` crea la base vacía de pruebas, y después `.\gradlew.bat test` pasa las 97 pruebas de la API.
 
 ## I.7 App en el emulador
 

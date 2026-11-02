@@ -1,14 +1,14 @@
 # Clandestino · TFG Android (Java + MySQL)
 
-App Android para gestionar las citas de una barbería de un solo barbero que trabaja con cita, solo atiende a clientes invitados y tiene un cupo de citas por día. El barbero aprueba a sus clientes, confirma o rechaza sus solicitudes y lleva su agenda y sus horarios. Proyecto Intermodular de DAM, línea 2 (Universae, curso 2025-2026).
+App Android de citas para barberos que trabajan desde casa. La hice para mi propio uso, porque corto el pelo en casa y las apps del mercado están pensadas para locales a pie de calle o funcionan como un marketplace que enseña otras barberías a tus clientes. Aquí solo entran los clientes que invitas, tú decides cuántas citas aceptas cada día y la app se queda en lo justo. El barbero aprueba a sus clientes, confirma o rechaza sus solicitudes y lleva su agenda y sus horarios. Proyecto Intermodular de DAM, línea 2 (Universae, curso 2025-2026).
 
 Arquitectura: app Android (Java, vistas XML, Material 3, MVVM) → API REST en Java 21 sobre el `HttpServer` del JDK → MySQL 9.7 en local. La app nunca se conecta a la base de datos.
 
 ## Estado
 
-Prototipo P1 terminado y probado en el emulador:
+Prototipo P1 terminado y probado en el emulador, más la cita que el barbero crea a mano, que es la primera función de la segunda fase:
 
-- 88 pruebas de la API, 25 de la app y 21 del esquema, todas en verde.
+- 97 pruebas de la API, 26 de la app y 21 del esquema, todas en verde.
 - Memoria en borrador, presentación de la defensa y guion del vídeo.
 
 ## Carpetas

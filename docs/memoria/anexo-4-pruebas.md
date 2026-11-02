@@ -1,16 +1,16 @@
 # Anexo IV. Casos de prueba manuales
 
-Las pruebas automáticas (88 de la API, 25 de la app y 21 del esquema) se describen en el apartado 7.8. Este anexo recoge las que se hicieron a mano: el recorrido completo de la app en el emulador y unas comprobaciones de la API con `curl`.
+Las pruebas automáticas (97 de la API, 26 de la app y 21 del esquema) se describen en el apartado 7.7. Este anexo recoge las que hice a mano: el recorrido completo de la app en el emulador, unas comprobaciones de la API con `curl` y la prueba de la cita a mano.
 
 ## IV.1 Recorrido de la app en el emulador
 
-Se hizo el 15 de octubre de 2026 en un emulador con Android 16 (API 36), pantalla de 1080 × 2400 y zona horaria Europe/Madrid, contra la API y la base de datos locales. Los casos van en el orden en que se ejecutaron, porque cada uno parte del estado que deja el anterior. Las capturas del anexo II se tomaron durante este recorrido.
+Lo hice el 15 de octubre de 2026 en un emulador con Android 16 (API 36), pantalla de 1080 × 2400 y zona horaria Europe/Madrid, contra la API y la base de datos locales. Los casos van en el orden en que los ejecuté, porque cada uno parte del estado que deja el anterior. Las capturas del anexo II las tomé durante este recorrido, salvo las de la cita a mano (apartado IV.3) y la de la agenda, que repetí ese día para que saliera el botón «Nueva cita».
 
 | Id | Caso | Pasos | Resultado esperado | Resultado |
 |---|---|---|---|---|
-| CP-01 | Configurar horarios (UC10) | Entrar como barbero. En «Horarios», cambiar el tramo y el cupo de varios días y pulsar «Guardar». Añadir un día extra y unas vacaciones de varios días. | La plantilla se guarda. El día extra y las vacaciones aparecen en la lista, una fila por día de vacaciones. | Correcto (figuras II.9 a II.11) |
-| CP-02 | Generar invitación (UC06) | En «Clientes», escribir una nota y pulsar «Generar». | Aparece un código de 12 caracteres con el botón de copiar y la invitación sale como pendiente en la lista. | Correcto (figura II.13) |
-| CP-03 | Registrarse con código (UC01) | Cerrar sesión. En la entrada, pulsar «Crear cuenta con código» y rellenar el código del CP-02, el usuario `carlos_m`, un teléfono y una contraseña. | La cuenta se crea y la app muestra la pantalla de acceso pendiente. La invitación pasa a usada por `@carlos_m`. | Correcto (figuras II.2, II.3 y II.12) |
+| CP-01 | Configurar horarios (UC10) | Entrar como barbero. En «Horarios», cambiar el tramo y el cupo de varios días y pulsar «Guardar». Añadir un día extra y unas vacaciones de varios días. | La plantilla se guarda. El día extra y las vacaciones aparecen en la lista, una fila por día de vacaciones. | Correcto (figuras II.12 a II.14) |
+| CP-02 | Generar invitación (UC06) | En «Clientes», escribir una nota y pulsar «Generar». | Aparece un código de 12 caracteres con el botón de copiar y la invitación sale como pendiente en la lista. | Correcto (figura II.16) |
+| CP-03 | Registrarse con código (UC01) | Cerrar sesión. En la entrada, pulsar «Crear cuenta con código» y rellenar el código del CP-02, el usuario `carlos_m`, un teléfono y una contraseña. | La cuenta se crea y la app muestra la pantalla de acceso pendiente. La invitación pasa a usada por `@carlos_m`. | Correcto (figuras II.2, II.3 y II.15) |
 | CP-04 | Aprobar cliente (UC07) | Entrar como barbero y, en «Clientes», aprobar a `carlos_m`. Después, volver a entrar como cliente. | El cliente aparece como aprobado y, al entrar, ve su panel en lugar de la pantalla de espera. | Correcto |
 | CP-05 | Solicitar cita (UC03 y UC04) | Como cliente, en «Pedir», tocar el jueves 22, elegir las 15:00 y pulsar el botón «Pedir cita». | La cita se crea y aparece como pendiente en «Mis citas». | Correcto (figuras II.4 y II.5) |
 | CP-06 | Confirmar con otra hora (UC08 y UC09) | Como barbero, en «Solicitudes», cambiar la hora final a 15:30 y pulsar «Confirmar». Abrir «Agenda» en esa semana y tocar el jueves. | La solicitud desaparece de la lista y la cita sale confirmada a las 15:30 en la agenda. | Correcto (figuras II.7 y II.8) |
@@ -22,7 +22,7 @@ Durante el recorrido aparecieron ocho fallos visuales y de configuración que la
 
 ## IV.2 Comprobaciones de la API con `curl`
 
-Se ejecutaron el 16 de octubre de 2026 contra la API en marcha en `http://127.0.0.1:8080`. Sirven para ver de un vistazo que la API responde con un código HTTP correcto y un error con nombre fijo en los casos más habituales. Estas mismas situaciones también están cubiertas por la clase de prueba `PruebaApi`.
+Las ejecuté el 16 de octubre de 2026 contra la API en marcha en `http://127.0.0.1:8080`. Sirven para ver de un vistazo que la API responde con un código HTTP correcto y un error con nombre fijo en los casos más habituales. Estas mismas situaciones también están cubiertas por la clase de prueba `PruebaApi`.
 
 | Id | Petición | Resultado esperado | Respuesta obtenida |
 |---|---|---|---|
@@ -42,3 +42,15 @@ Por ejemplo, el CP-09 se lanza así:
 ```
 curl -i http://127.0.0.1:8080/api/mis-citas
 ```
+
+## IV.3 Cita a mano en el emulador
+
+La hice el 17 de octubre de 2026 en el mismo emulador y con los datos que dejó el recorrido del apartado IV.1. Ese día era sábado, y los sábados están cerrados en la plantilla de horarios.
+
+| Id | Caso | Pasos | Resultado esperado | Resultado |
+|---|---|---|---|---|
+| CP-16 | Cita a mano sin datos (RF-P2-02) | Como barbero, en «Agenda», pulsar «Nueva cita» y después «Guardar» sin elegir nada. | El diálogo sigue abierto y avisa con «Elige el cliente, el día y la hora.». | Correcto |
+| CP-17 | Cita a mano en un día cerrado (RF-P2-02) | Elegir a `@carlos_m`, el sábado 24 de octubre y las 12:00. Girar la pantalla a horizontal y volver a vertical. Pulsar «Guardar» y entrar después como `carlos_m`. | Tras el giro siguen elegidos el cliente, el día y la hora, y las listas enseñan todas sus opciones. Al guardar, la agenda pasa a la semana del 19 al 25 con el sábado elegido, la cita sale confirmada a las 12:00 y aparece el aviso «Cita guardada.». El cliente la ve confirmada en «Mis citas». | Correcto (figuras II.9 y II.10) |
+| CP-18 | Hora ya cogida (RF-P2-02) | Como barbero, repetir el CP-17 con el mismo cliente, día y hora. | La app avisa con «Esa hora ya está cogida.», que es el mensaje del `409 hueco_ocupado`, y no se crea otra cita. | Correcto (figura II.11) |
+
+*Tabla IV.3. Casos de prueba de la cita a mano. Fuente: elaboración propia.*

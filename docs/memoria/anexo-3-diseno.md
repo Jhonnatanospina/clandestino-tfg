@@ -1,8 +1,8 @@
 # Anexo III. Documentación técnica de diseño
 
-Este anexo recoge el material de diseño que no cabe en el cuerpo de la memoria: la descripción completa de los diez casos de uso, su trazabilidad con pantallas, rutas de la API y requisitos, los diagramas de clases y de secuencia a tamaño completo y los mockups que no aparecen en la figura 2.
+Este anexo recoge el material de diseño que no cabe en el cuerpo de la memoria. Incluye la descripción completa de los diez casos de uso y su trazabilidad con pantallas, rutas y requisitos, los diagramas de clases y de secuencia completos, los mockups que no aparecen en la figura 1, el diagrama de estados de una cita y tres tablas de detalle (base de datos, seguridad y módulos del ciclo).
 
-Los códigos de error que aparecen en los casos de uso son los que devuelve la API en el campo `error` de la respuesta, con el código HTTP entre paréntesis. Las pantallas se nombran como en los mockups: A1 a A3 para el acceso, C1 a C3 para el cliente y D1 a D4 para el barbero.
+Los códigos de error que aparecen en los casos de uso son los que devuelve la API en el campo `error` de la respuesta, con el código HTTP entre paréntesis. Las pantallas se nombran como en los mockups: A1 a A3 para el acceso, C1 a C3 para el cliente y D1 a D4 para el barbero. La D5, el diálogo de la cita a mano, es de la segunda fase y no tiene mockup.
 
 ## III.1 Descripción de los casos de uso
 
@@ -122,15 +122,16 @@ La tabla III.11 relaciona cada caso de uso con la pantalla donde ocurre, las rut
 | UC08 Gestionar solicitudes | D1 | `GET /api/admin/citas?estado=pendiente`, `POST /api/admin/citas/{id}/confirmar`, `POST /api/admin/citas/{id}/rechazar` | RF-22, RF-23, RF-24 |
 | UC09 Gestionar la agenda | D2 | `GET /api/admin/citas?estado=confirmada`, `POST /api/admin/citas/{id}/asistencia`, `POST /api/admin/citas/{id}/cancelar` | RF-25, RF-26, RF-27 |
 | UC10 Configurar horarios y vacaciones | D3 | `GET` y `PUT /api/admin/horarios`, `GET` y `POST /api/admin/excepciones`, `DELETE /api/admin/excepciones/{id}` | RF-11, RF-28, RF-29 |
+| Cita a mano (P2, ligada a UC08 y UC09) | D5, diálogo sobre D2 | `POST /api/admin/citas` | RF-P2-02 |
 | Sin caso de uso | — | `GET /api/salud` (anexo I) | RF-30 |
 
 *Tabla III.11. Trazabilidad entre casos de uso, pantallas, rutas y requisitos. Fuente: elaboración propia.*
 
-C3 no tiene caso de uso propio, porque cerrar sesión forma parte de UC02 y el cambio de tema es un requisito no funcional de usabilidad. El requisito RF-25 preveía una vista de agenda por semana o por mes, pero solo se construyó la semanal.
+C3 no tiene caso de uso propio, porque cerrar sesión forma parte de UC02 y el cambio de tema es un requisito no funcional de usabilidad. La cita a mano tampoco lo tiene, ya que crea directamente una cita confirmada que después se lleva desde la agenda como cualquier otra. El requisito RF-25 preveía una vista de agenda por semana o por mes, pero solo se construyó la semanal.
 
 ## III.3 Diagramas de clases
 
-La figura 8 de la memoria muestra el modelo de la API. Los seis diagramas siguientes completan el resto de capas y se generaron a partir de las clases compiladas, de modo que los nombres coinciden con el código. Cada uno agrupa las clases por paquete.
+La figura 6 de la memoria muestra el modelo de la API. Los seis diagramas siguientes completan el resto de capas y se generaron a partir de las clases compiladas, de modo que los nombres coinciden con el código. Cada uno agrupa las clases por paquete.
 
 ![Figura III.1](../diagramas/04a-clases-api-http-auth.png)
 
@@ -158,7 +159,7 @@ La figura 8 de la memoria muestra el modelo de la API. Los seis diagramas siguie
 
 ## III.4 Diagramas de secuencia de «Solicitar cita»
 
-El caso UC04 es el que atraviesa todas las capas, así que se dibujó entero, desde que el cliente pulsa el botón hasta que la cita queda guardada. Por tamaño se partió en cinco diagramas. El último, la inserción con el cerrojo por fecha, es la figura 9 de la memoria. Los otros cuatro van aquí.
+El caso UC04 es el que atraviesa todas las capas, así que se dibujó entero, desde que el cliente pulsa el botón hasta que la cita queda guardada. Por tamaño se partió en cinco diagramas, y el último es la inserción con el cerrojo por fecha que explica el apartado 7.4.
 
 ![Figura III.7](../diagramas/06a-secuencia-pedir-cita-app-1-envio.png)
 
@@ -176,18 +177,75 @@ El caso UC04 es el que atraviesa todas las capas, así que se dibujó entero, de
 
 *Figura III.10. API, validación. Dentro del cerrojo de la fecha y de la transacción, el servicio comprueba horizonte, tramo, hora, cupo y hueco antes de reservar. Fuente: elaboración propia.*
 
+![Figura III.11](../diagramas/06c-secuencia-pedir-cita-api-reserva-2-insercion.png)
+
+*Figura III.11. API, inserción. El servicio cuenta las citas del día y guarda la nueva dentro del cerrojo de la fecha, y si MySQL devuelve el error 1062 la API responde 409 hueco_ocupado. Fuente: elaboración propia.*
+
 ## III.5 Mockups restantes
 
-La figura 2 de la memoria reúne seis de los once mockups. Estos son los otros cinco: el registro, las dos variantes de la pantalla de espera, los ajustes y la pantalla de clientes e invitaciones.
+La figura 1 de la memoria reúne seis de los once mockups. Estos son los otros cinco: el registro, las dos variantes de la pantalla de espera, los ajustes y la pantalla de clientes e invitaciones.
 
 | | | |
 |---|---|---|
 | ![](../mockups/A2-registro-codigo.png) | ![](../mockups/A3-espera.png) | ![](../mockups/A3b-bloqueado.png) |
-| *Figura III.11. A2, registro con código* | *Figura III.12. A3, cuenta pendiente* | *Figura III.13. A3, cuenta bloqueada* |
+| *Figura III.12. A2, registro con código* | *Figura III.13. A3, cuenta pendiente* | *Figura III.14. A3, cuenta bloqueada* |
 
 | | |
 |---|---|
 | ![](../mockups/C3-ajustes.png) | ![](../mockups/D4-clientes-invitaciones.png) |
-| *Figura III.14. C3, ajustes* | *Figura III.15. D4, clientes e invitaciones* |
+| *Figura III.15. C3, ajustes* | *Figura III.16. D4, clientes e invitaciones* |
 
-*Fuente de las figuras III.11 a III.15: elaboración propia.*
+*Fuente de las figuras III.12 a III.16: elaboración propia.*
+
+La app final respeta los mockups casi por completo. El cambio más visible está en «Pedir cita» (figuras III.17 y III.18). El mockup mostraba un mes entero con flechas para avanzar, pero el horizonte de reserva quedó fijado en dos semanas y el calendario enseña solo esos días, sin flechas.
+
+| | |
+|---|---|
+| ![](../mockups/C2-pedir-cita.png) | ![](../capturas/C2-pedir-cita.png) |
+| *Figura III.17. C2, mockup de «Pedir cita»* | *Figura III.18. C2, la app en el emulador* |
+
+*Fuente de las figuras III.17 y III.18: elaboración propia.*
+
+## III.6 Estados de una cita
+
+Una cita pasa por varios estados a lo largo de su vida (figura III.19). Solo las pendientes y las confirmadas ocupan hueco y cuentan para el cupo del día. El estado «caducada», que en la aplicación original marca las solicitudes que nadie respondió a tiempo, existe en la base de datos pero no lo asigna ningún proceso del prototipo, y el barrido periódico que lo haría queda para una segunda fase.
+
+![Figura III.19](../diagramas/07-estados-cita.png)
+
+*Figura III.19. Diagrama de estados de una cita. Fuente: elaboración propia.*
+
+## III.7 Tablas de detalle
+
+| Tabla | Qué guarda | Relaciones y restricciones principales |
+|---|---|---|
+| `usuarios` | Barbero y clientes: @usuario, teléfono, hash de la contraseña, rol, estado (pendiente, aprobado o bloqueado) y precio del corte | @usuario y teléfono únicos |
+| `invitaciones` | Códigos de alta de un solo uso, con nota, estado y fecha de caducidad | `creada_por` y `usada_por` apuntan a `usuarios` |
+| `citas` | Cada cita con su fecha, la hora pedida, la hora final que fija el barbero, el estado y el precio | `cliente_id` apunta a `usuarios`; índice único sobre la fecha y la hora ocupada |
+| `horarios_semanales` | Tramo de apertura y cupo de cada día de la semana | Un registro por día, del 1 (lunes) al 7 (domingo) |
+| `excepciones_dia` | Fechas sueltas que mandan sobre el horario semanal: vacaciones (cerrado) o días extra (abierto, con su tramo y su cupo) | Una excepción por fecha; una restricción `CHECK` exige que un día cerrado no tenga horas |
+
+*Tabla III.12. Tablas de la base de datos. Fuente: elaboración propia.*
+
+| Categoría MASVS | Qué hace Clandestino |
+|---|---|
+| STORAGE (almacenamiento) | El token de sesión se guarda cifrado con AES-GCM y una clave que vive en el Android Keystore y no puede extraerse del dispositivo (Android Developers, 2026a). La copia de seguridad automática de Android está desactivada (`allowBackup="false"`). |
+| CRYPTO (criptografía) | Las contraseñas se guardan con PBKDF2-HMAC-SHA256, 600.000 iteraciones, sal aleatoria de 16 bytes y comparación en tiempo constante. El token se firma con HMAC-SHA256 y una clave de al menos 32 bytes. |
+| AUTH (autenticación) | El rol y el estado se comprueban siempre en el servidor, nunca solo en la app. El token caduca a los 7 días. Tras 5 intentos fallidos en 15 minutos, la API responde 429. Un usuario inexistente tarda lo mismo en responder que una contraseña equivocada (775 ms medidos), así que por el tiempo no se puede saber qué cuentas existen. |
+| NETWORK (red) | En la versión de depuración solo se permite HTTP sin cifrar hacia `10.0.2.2` y `localhost`, mediante la configuración de seguridad de red (Android Developers, 2026d). La versión de publicación no tiene esa excepción, pero el prototipo aún no tiene HTTPS (apartado 8.2 de la memoria). |
+| CODE (código) | Todas las consultas usan `PreparedStatement`, lo que evita la inyección SQL. La API vuelve a validar cada dato aunque la app ya lo haya hecho y rechaza los cuerpos de más de 16 KiB. |
+| PRIVACY (privacidad) | Solo se piden @usuario, teléfono y contraseña. El registro muestra un aviso de privacidad, como exige el RGPD (Reglamento (UE) 2016/679, 2016), y el cliente no ve los precios ni los datos de otros clientes. |
+
+*Tabla III.13. Medidas de seguridad según las categorías de OWASP MASVS. Fuente: elaboración propia a partir de OWASP Mobile Application Security (2024).*
+
+| Módulo | Dónde se aplica |
+|---|---|
+| Programación multimedia y dispositivos móviles | Actividades y su ciclo de vida (registrado con `Log.i`), fragmentos, `RecyclerView`, diálogos, `SharedPreferences`, `onSaveInstanceState` en «Pedir cita», `HttpURLConnection` en hilo secundario, Material 3 |
+| Programación de servicios y procesos | Servidor HTTP con grupo de hilos, `synchronized` en la sección crítica del cupo, prueba de hilos con `CountDownLatch`, hash de contraseñas y firma HMAC |
+| Bases de datos | Modelo entidad-relación, restricciones, columna generada con índice único, transacciones, usuario sin privilegios de administración |
+| Acceso a datos | JDBC con `PreparedStatement`, patrón repositorio, transacciones, JSON sobre HTTP |
+| Programación | Programación orientada a objetos en Java: interfaces, `enum`, `record`, excepciones propias, colecciones |
+| Desarrollo de interfaces | Mockups, layouts XML, tema claro y oscuro, validación en vivo, accesibilidad básica, manual de usuario |
+| Entornos de desarrollo | Android Studio, Gradle, JUnit, UML con draw.io, lint |
+| Empresa e iniciativa emprendedora | Análisis de mercado y propuesta de valor (apartado 3.4 de la memoria) |
+
+*Tabla III.14. Aplicación de los módulos del ciclo en el proyecto. Fuente: elaboración propia.*

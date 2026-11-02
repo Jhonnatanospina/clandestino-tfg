@@ -21,6 +21,7 @@ import java.io.IOException;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -45,6 +46,7 @@ public class RutasAdmin {
 
     public void registrar(Enrutador enrutador) {
         enrutador.registrar("GET", "/api/admin/citas", Acceso.ADMIN, this::listarCitas);
+        enrutador.registrar("POST", "/api/admin/citas", Acceso.ADMIN, this::crearCita);
         enrutador.registrar("POST", "/api/admin/citas/{id}/confirmar", Acceso.ADMIN, this::confirmar);
         enrutador.registrar("POST", "/api/admin/citas/{id}/rechazar", Acceso.ADMIN, this::rechazar);
         enrutador.registrar("POST", "/api/admin/citas/{id}/cancelar", Acceso.ADMIN, this::cancelar);
@@ -98,6 +100,20 @@ public class RutasAdmin {
             }
         }
         return estados;
+    }
+
+    /**
+     * POST /api/admin/citas con { "cliente_id": 7, "fecha": "2026-10-08", "hora_final": "18:00" }.
+     * Es la cita que el barbero mete a mano (D5) y nace ya confirmada.
+     */
+    private void crearCita(HttpExchange intercambio, Usuario admin) throws IOException {
+        JSONObject cuerpo = ConversorJson.leerCuerpo(intercambio);
+        long clienteId = ConversorJson.entero(cuerpo, "cliente_id", null);
+        LocalDate fecha = ConversorJson.fecha(cuerpo, "fecha");
+        LocalTime hora = ConversorJson.hora(cuerpo, "hora_final");
+
+        Cita cita = servicioCitas.crearManual(clienteId, fecha, hora);
+        ConversorJson.responder(intercambio, 201, ConversorJson.citaParaAdmin(cita));
     }
 
     /** POST /api/admin/citas/{id}/confirmar con { "hora_final": "17:30" } opcional. */
